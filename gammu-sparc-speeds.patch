@@ -1,0 +1,13 @@
+--- gammu-1.00.0/common/device/serial/ser_unx.c.orig	2005-02-18 07:58:19.223641376 +0100
++++ gammu-1.00.0/common/device/serial/ser_unx.c	2005-02-18 08:00:14.629097080 +0100
+@@ -249,10 +249,6 @@
+ 		case 1152000:	speed2 = B1152000;	break;
+ 		case 1500000:	speed2 = B1500000;	break;
+ 		case 2000000:	speed2 = B2000000;	break;
+-		case 2500000:	speed2 = B2500000;	break;
+-		case 3000000:	speed2 = B3000000;	break;
+-		case 3500000:	speed2 = B3500000;	break;
+-		case 4000000:	speed2 = B4000000;	break;	
+ #endif
+ #endif
+ #endif
