@@ -47,7 +47,7 @@ cd ../..
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man1,%{_prefix}/src/examples/%{name},%{_sysconfdir}}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man1,%{_examplesdir}/%{name},%{_sysconfdir}}
 
 install %{name}/%{name} $RPM_BUILD_ROOT%{_bindir}
 install docs/examples/config/gammurc $RPM_BUILD_ROOT%{_sysconfdir}
