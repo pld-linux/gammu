@@ -3,9 +3,9 @@
 @@ -10,7 +10,7 @@
  ECHO             = /bin/echo
  CC               = gcc
- CFLAGS           = -O2 -Wall -Wno-format-y2k -pthread
+ CFLAGS           = -O2 -fPIC -Wall -Wno-format-y2k -pthread
 -LDLIBS           =  -L/usr/lib/mysql -lmysqlclient -lz -lcrypt -lnsl -lm -lc -lnss_files -lnss_dns -lresolv -lc -lnss_files -lnss_dns -lresolv  -pthread -lbluetooth
 +LDLIBS           =  -lmysqlclient -lz -lcrypt -pthread -lbluetooth
  INSTALL          = /usr/bin/install
- FIND             = /usr/bin/find
+ FIND             = /bin/find
  RPMBUILD         = /usr/bin/rpmbuild
