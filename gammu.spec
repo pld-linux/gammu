@@ -7,6 +7,7 @@ Epoch:		1
 License:	GPL v2
 Group:		Applications/Communications
 Source0:	http://www.mwiacek.com/english/zips/%{name}.tar.gz
+# Source0-md5:	7f15627bb8c39337db1b3ecc46f78bbe
 Patch0:		%{name}-etc_dir.patch
 URL:		http://www.mwiacek.com/english/gsm/gammu/gammu.html
 BuildRequires:	autoconf
