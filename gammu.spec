@@ -49,19 +49,7 @@ cd cfg/autoconf
 %configure	\
 	--enable-cb 			\
 	--enable-7110incoming 		\
-	--enable-6210calendar 		\
-	--enable-fbus 			\
-	--enable-mbus 			\
-	--enable-fbusirda 		\
-	--enable-phonetblue 		\
-	--enable-fbusdku5 		\
-	--enable-fbuspl2303 		\
-	--enable-fbusdlr3  		\
-	--enable-obexgen 		\
-	--enable-mroutergen 		\
-	--enable-mrouterblue  		\
-	--enable-irdaphonet 		\
-	--enable-irdaobex		
+	--enable-6210calendar 		
 cd ../..	
 %{__make}
 
