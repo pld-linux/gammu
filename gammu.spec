@@ -1,10 +1,8 @@
-# TODO:
-# - build shared version (simple make shared make error that -fPIC is needed)
 Summary:	Linux/Unix tool suite for Nokia mobile phones
 Summary(pl):	Linuksowy/uniksowy zestaw narzêdzi dla telefonów komórkowych Nokia
 Name:		gammu
 Version:	1.00.0
-Release:	0.1
+Release:	1
 Epoch:		1
 License:	GPL v2
 Group:		Applications/Communications
@@ -52,25 +50,36 @@ cd cfg/autoconf
 	--enable-7110incoming 		\
 	--enable-6210calendar 		
 cd ../..	
-%{__make}
+%{__make} shared
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man1,%{_examplesdir}/%{name},%{_sysconfdir}}
+install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_examplesdir}/%{name}}
+%{__make} installshared \
+	DESTDIR=$RPM_BUILD_ROOT \
+	prefix=%{_prefix} \
+	INSTALL_MAN_DIR=%{_mandir}/man1 \
+	FIND=/usr/bin/find
 
-install %{name}/%{name} $RPM_BUILD_ROOT%{_bindir}
 install docs/examples/config/gammurc $RPM_BUILD_ROOT%{_sysconfdir}
-mv -f docs/docs/english/%{name}.1 $RPM_BUILD_ROOT%{_mandir}/man1
-mv -f docs/examples $RPM_BUILD_ROOT%{_examplesdir}/%{name}
-mv -f docs/develop $RPM_BUILD_ROOT%{_examplesdir}/%{name}
+cp -r docs/{examples,develop} $RPM_BUILD_ROOT%{_examplesdir}/%{name}
+
+rm -rf $RPM_BUILD_ROOT%{_docdir}/%{name}
+# anybody feels like developing gammu-based apps?
+rm -rf $RPM_BUILD_ROOT{%{_includedir},%{_pkgconfigdir},%{_libdir}/*.{so,a}}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%post	-p /sbin/ldconfig
+%postun	-p /sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)
 %doc changelog docs/* readme.txt
 %attr(755,root,root) %{_bindir}/%{name}
+%attr(755,root,root) %{_libdir}/*.so.*
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/gammurc
+%{_datadir}/%{name}
 %{_examplesdir}/%{name}
-%{_mandir}/man1/*.1*
+%{_mandir}/man1/*
