@@ -2,7 +2,7 @@ Summary:	Linux/Unix tool suite for Nokia mobile phones
 Summary(pl):	Linuksowy/Uniksowy zestaw narzêdzi dla telefonów komórkowych Nokia
 Name:		gammu
 Version:	0.64
-Release:	1
+Release:	2
 Epoch:		1
 License:	GPL v2
 Group:		Applications/Communications
@@ -37,13 +37,18 @@ kopie zapasowe danych i odtwarzaæ je.
 %setup -q -n %{name}
 
 %build
+cd cfg/autoconf/
+%{__autoconf}
+%configure
+cd ../../
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man1,%{_prefix}/src/examples,%{name}}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man1,%{_prefix}/src/examples/%{name},%{_sysconfdir}}
 
 install %{name}/%{name} $RPM_BUILD_ROOT%{_bindir}
+install docs/examples/config/gammurc $RPM_BUILD_ROOT%{_sysconfdir}
 mv -f docs/docs/english/%{name}.1 $RPM_BUILD_ROOT%{_mandir}/man1
 mv -f docs/examples $RPM_BUILD_ROOT%{_examplesdir}/%{name}
 mv -f docs/default $RPM_BUILD_ROOT%{_examplesdir}/%{name}
@@ -55,5 +60,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc changelog docs/* readme.txt
 %attr(755,root,root) %{_bindir}/%{name}
+%config(noreplace) %{_sysconfdir}/gammurc
 %{_examplesdir}/%{name}
 %{_mandir}/man1/*.1*
