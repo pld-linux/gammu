@@ -1,34 +1,30 @@
 Summary:	Linux/Unix tool suite for Nokia mobile phones
 Summary(pl):	Linuksowy/Uniksowy zestaw narzêdzi dla telefonów komórkowych Nokia
-Name:		mygnokii2
-Version:	0.58
-Release:	2
+Name:		gammu
+Version:	0.64
+Release:	1
 Epoch:		1
-License:	GPL
+License:	GPL v2
 Group:		Applications/Communications
-Source0:	http://marcin-wiacek.fkn.pl/english/zips/%{name}.tar.gz
-Source1:	%{name}-config.h
-Source2:	%{name}-manpage
-URL:		http://marcin-wiacek.topnet.pl
+Source0:	http://www.mwiacek.com/english/zips/%{name}.tar.gz
+URL:		http://www.mwiacek.com/english/gsm/gammu/gammu.html
 BuildRequires:	autoconf
 BuildRequires:	automake
+Provides:	mygnokii2
+Obsoletes:	mygnokii2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-MyGnokii2 is a Linux/Unix tool suite and (eventually) modem/fax driver
-for Nokia's mobile phones, released under the GPL. See
-docs/develop.txt: and Q. Why mygnokii2, not gnokii?
-
-%description -l pl
-Gnokii jest zestawem narzêdzi dla Linuksa/Uniksa, oraz (ewentualnie)
-sterownikiem modemu/faxu dla telefonów komórkowych Nokia, dostêpnym na
-licencji GPL. Przeczytaj docs/develop.txt:Q. Why mygnokii2, not
-gnokii?
+Gammu (formerly known as MyGnokii2) is cellular manager for various
+mobile phones and modems. It currently supports Nokia 3210, 33xx, 3410,
+3510, 51xx, 5210, 5510, 61xx, 62xx, 63xx, 6510, 7110, 82xx, 8310, 9110,
+and 9210, and AT devices (such as Siemens, Alcatel, WaveCom, IPAQ, and
+other). It has a command line version with many functions for ringtones,
+phonebook, SMS, logos, WAP, date/time, alarm, calls, etc. It can also
+make full backups and restore them.
 
 %prep
 %setup -q -n %{name}
-cp %{SOURCE1} config.h
-cp %{SOURCE2} %{name}.1
 
 %build
 %{__make}
@@ -37,8 +33,8 @@ cp %{SOURCE2} %{name}.1
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man1/,%{_prefix}/src/examples,%{name}}
 
-install mygnokii/mygnokii $RPM_BUILD_ROOT%{_bindir}
-install %{name}.1 $RPM_BUILD_ROOT%{_mandir}/man1/
+install %{name}/%{name} $RPM_BUILD_ROOT%{_bindir}
+mv -f docs/docs/english/%{name}.1 $RPM_BUILD_ROOT%{_mandir}/man1/
 mv -f docs/examples $RPM_BUILD_ROOT%{_examplesdir}/%{name}
 mv -f docs/default $RPM_BUILD_ROOT%{_examplesdir}/%{name}
 
@@ -47,8 +43,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc docs
-%doc readme.txt
-%{_bindir}/mygnokii
+%doc changelog docs/* readme.txt
+%attr(755,root,root) %{_bindir}/%{name}
 %{_examplesdir}/%{name}
-%{_mandir}/man1/
+%{_mandir}/man1/*.1*
