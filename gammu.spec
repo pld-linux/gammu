@@ -1,7 +1,5 @@
 %define         major   0
-%define         minor   79
-
-%define         ver    %{major}%{minor}
+%define         minor   80
 
 Summary:	Linux/Unix tool suite for Nokia mobile phones
 Summary(pl):	Linuksowy/Uniksowy zestaw narzêdzi dla telefonów komórkowych Nokia
@@ -11,8 +9,8 @@ Release:	1
 Epoch:		1
 License:	GPL v2
 Group:		Applications/Communications
-Source0:	http://www.mwiacek.com/english/zips/%{name}.tar.gz
-# Source0-md5:	418bbe4e808f9e4e9e93e3c42206735d
+Source0:	http://www.mwiacek.com/english/zips/%{name}/%{name}-%{major}%{minor}.tar.gz
+# Source0-md5:	faf6f43638271adddf8fef6448d8b03a
 Patch0:		%{name}-etc_dir.patch
 URL:		http://www.mwiacek.com/english/gsm/gammu/gammu.html
 BuildRequires:	autoconf
@@ -41,7 +39,7 @@ WAP, daty/czasu, budzika, dzwonienia itp. Mo¿e tak¿e wykonywaæ pe³ne
 kopie zapasowe danych i odtwarzaæ je.
 
 %prep
-%setup -q -n %{name}-%{ver}
+%setup -q -n %{name}-%{major}%{minor}
 %patch0 -p1
 
 %build
