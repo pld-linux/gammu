@@ -1,0 +1,32 @@
+diff -Nru gammu/common/gsmstate.c gammu.new/common/gsmstate.c
+--- gammu/common/gsmstate.c	Sat Nov 30 20:15:12 2002
++++ gammu.new/common/gsmstate.c	Sat Mar 29 12:29:07 2003
+@@ -539,7 +539,8 @@
+ 	CFG_Header	*cfg_info;
+         char		*homedir;
+         char		rcfile[200];
+-
++        char            *etc_dir;
++        
+ #if defined(WIN32) || defined(DJGPP)
+         homedir = getenv("HOMEDRIVE");
+         strncpy(rcfile, homedir ? homedir : "", 200);
+@@ -547,9 +548,15 @@
+         strncat(rcfile, homedir ? homedir : "", 200);
+         strncat(rcfile, "\\gammurc", 200);
+ #else
+-        homedir = getenv("HOME");
+-        if (homedir) strncpy(rcfile, homedir, 200);
+-        strncat(rcfile, "/.gammurc", 200);
++        etc_dir = getenv("ETC_DIR");
++        if (etc_dir) {
++                strncpy(rcfile, etc_dir, 200);
++                strncat(rcfile, "/gammurc", 200);
++        } else {
++                homedir = getenv("HOME");
++                if (homedir) strncpy(rcfile, homedir, 200);
++                strncat(rcfile, "/.gammurc", 200);
++        }
+ #endif
+ 
+         if ((cfg_info = CFG_ReadFile(rcfile, false)) == NULL) {
