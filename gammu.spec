@@ -1,14 +1,17 @@
+# TODO:
+# - build shared version (simple make shared make error that -fPIC is needed)
 Summary:	Linux/Unix tool suite for Nokia mobile phones
 Summary(pl):	Linuksowy/uniksowy zestaw narzêdzi dla telefonów komórkowych Nokia
 Name:		gammu
 Version:	0.99.0
-Release:	0.1
+Release:	0.2
 Epoch:		1
 License:	GPL v2
 Group:		Applications/Communications
 Source0:	http://www.mwiacek.com/zips/gsm/gammu/stable/0_9x/%{name}-%{version}.tar.gz
 # Source0-md5:	e7e2c1366bc4ee4d4e0ddb0f56bd2772
 Patch0:		%{name}-etc_dir.patch
+Patch1:		%{name}-no_nss.patch
 URL:		http://www.mwiacek.com/gsm/soft/gammu.html
 BuildRequires:	autoconf
 BuildRequires:	bluez-libs-devel
@@ -38,6 +41,7 @@ kopie zapasowe danych i odtwarzaæ je.
 %prep
 %setup -q
 #%patch0 -p1
+%patch1
 
 %build
 cd cfg/autoconf
