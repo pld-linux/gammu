@@ -9,7 +9,6 @@ Group:		Applications/Communications
 Source0:	http://www.mwiacek.com/english/zips/%{name}.tar.gz
 URL:		http://www.mwiacek.com/english/gsm/gammu/gammu.html
 BuildRequires:	autoconf
-BuildRequires:	automake
 Provides:	mygnokii2
 Obsoletes:	mygnokii2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -37,10 +36,10 @@ kopie zapasowe danych i odtwarzaæ je.
 %setup -q -n %{name}
 
 %build
-cd cfg/autoconf/
+cd cfg/autoconf
 %{__autoconf}
 %configure
-cd ../../
+cd ../..
 %{__make}
 
 %install
