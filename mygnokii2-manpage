@@ -1,0 +1,514 @@
+.TH "Mygnokii2" "1" "05.06.2002" "Marcin Wiacek and others" "cellurar phone utitlies"
+.SH "NAME"
+.LP 
+Mygnoki2\- Does some neat things with your cell phone
+.SH "SYNTAX"
+.LP 
+mygnokii2 [\fIoption\fP] [<\fIfilename\fP>]
+.br 
+.SH "DESCRIPTION"
+.LP 
+This program is a tool for Nokia and other mobile phones.
+.SH "OPTIONS"
+.LP 
+.TP 
+\fB\-dscan\fR <\fIdirectory\fP>
+Scans specified <\fIdirectory\fP>.
+.TP 
+\fB\fB\-\-help\fR\fR
+Output help information and exit.
+.TP 
+\fB\fB\-\-version\fR\fR
+Output version information and exit.
+
+.TP 
+mygnokii \fB\fB\-\-identify\fR\fR
+       Show the most important phone data
+
+.TP 
+\fB\fB\-\-monitor\fR\fR
+       Get phone status and writes continuously to stdout. Press Ctrl+C
+       to break this state.
+
+.TP 
+\fB\fB\-\-reset SOFT|HARD\fR\fR
+       Make phone reset: soft (without asking for PIN) or hard (with PIN).
+       Note: some phones will make hard reset even with SOFT option.
+
+.TP 
+\fB\fB\-\-getsecuritycode\fR\fR
+       Get security code from phone
+
+.TP 
+\fB\fB\-\-getdatetime\fR\fR
+       Get date and time from phone
+
+.TP 
+\fB\fB\-\-setdatetime\fR\fR
+       Set date and time in phone to date and time set in computer. Please 
+       note,^M that this option doesn't show clock on phone screen. It only set
+       date and time.
+  TIP: you can make such synchronization each time, when will connect
+       your phone and usmygnokii2. See gnokiirc for details.
+
+.TP 
+\fB\-\-getalarm\fR
+       Get alarm from phone
+
+.TP 
+\fB\-\-getmemory DC|MC|RC|ON|VM|SM|ME start [stop]\fR
+       Get memory location from phone. Numerate locations from 1.
+       DC = Dialled calls
+       MC = Missed calls
+       RC = Received calls
+       ON = Own numbers
+       VM = voice mailbox
+       SM = SIM phonebook
+       ME = phone internal phonebook
+
+.TP 
+\fB\-\-getsms folder start [stop]\fR
+       Get SMS. Locations are numerated from 1.
+
+       When give folder 0, sms is given from "flat" memory (all sms from all
+       folders have unique numbers). It's sometimes emulated bmygnokii2.
+       You can use it with all phones.
+
+       When give folder 1, 2, etc. sms are taken from Inbox, Outbox, etc.
+       and each sms has unique number in his folder. Name of folders can
+       depend on your phone (the most often 1="Inbox", 2="Outbox", etc.).
+       This method is not supported by all phones (for example, not supported
+       by Nokia 3310, 5110, 6110). If work with your phone, use \fB\-\-getsmsfolders\fR
+       to get folders list.
+
+.TP 
+\fB\-\-deletesms folder start [stop]\fR
+       Delete SMS from phone. See description for \fB\-\-getsms for info about\fR
+       sms folders naming convention. Locations are numerated from 1.
+
+.TP 
+\fB\-\-getallsms\fR
+       Get all SMS from phone. In some phones you will have also SMS templates
+       and info about locations used to save Picture Images. With each sms you
+       will see location. If you want to get such sms from phone alone, use
+     mygnokii \fB\-\-getsms 0 location\fR
+
+.TP 
+\fB\-\-getsmsc start [stop]\fR
+       Get smsc settings from SIM card. Numerate locations from 1.
+
+.TP 
+\fB\-\-getsmsfolders\fR
+       Get names for SMS folders in phone
+
+.TP 
+\fB\-\-getringtone location [file]\fR
+       Get ringtone from phone in RTTL or BINARY format. Locations are
+       numerated from 1.
+
+.TP 
+\fB\-\-setringtone file [location] [\-scale]\fR
+       Set ringtone in phone. When don't give location, it will be written "with preview" (in phones supporting this feature like 61xx or 6210).  When use RTTL ringtones, give location and use \-scale, there will be written scale info with each note. It will avoid scale problems available during editing ringtone in composer from phone menu (for example, in N33xx).
+.br
+  TIP: when use ~ char in ringtone name, in some phones (like 33xx)
+       name will blink later in phone menus
+
+.TP 
+\fB\-\-copyringtone source destination [RTTL|BINARY]\fR
+       Copy source ringtone to destination.
+
+.TP 
+\fB\-\-nokiaplayringtone file\fR
+       Play aproximation of ringtone over phone buzzer.
+
+.TP 
+\fB\-\-nokiacomposer file\fR
+       Show, how to enter RTTL ringtone in composer existing in many Nokia phones (and how should it look like).
+
+.TP 
+\fB\-\-dialvoice number\fR
+       Make voice call from SIM card line set in phone.
+
+.TP 
+\fB\-\-answercall\fR
+       Answer incoming call.
+
+.TP 
+\fB\-\-cancelcall\fR
+       Cancel incoming call
+
+.TP 
+\fB\-\-getcalendarnote start [stop]\fR
+       Get calendar note(s) from phone. In Nokia 3310 and 3330 they're named "Reminders" and have some limitations (they depends on phone firmware version). Locations are numerated from 1.
+
+.TP 
+\fB\-\-deletecalendarnote start [stop]\fR
+       Delete calendar notes (or "Reminders") from phone. Locations are numerated from 1.
+
+.TP 
+\fB\-\-getwapbookmark start [stop]\fR
+       Get WAP bookmark(s) from phone. Locations are numerated from 1.
+
+.TP 
+\fB\-\-deletewapbookmark start [stop]\fR
+       Delete WAP bookmark(s) from phone. Locations are numerated from 1.
+
+.TP 
+\fB\-\-getwapsettings start [stop]\fR
+       Get WAP settings from phone. Locations are numerated from 1.
+
+.TP 
+\fB\-\-getbitmap STARTUP [file]\fR
+       Get static startup logo from phone. Allow to save it in file.
+
+.TP 
+\fB\-\-getbitmap CALLER location [file]\fR
+       Get caller group logo from phone. Locations 1\-5.
+
+.TP 
+\fB\-\-getbitmap OPERATOR [file]\fR
+       Get operator logo (picture displayed instead of operator name) from
+       phone.
+
+.TP 
+\fB\-\-getbitmap PICTURE location [file]\fR
+       Get Picture Image from phone.
+
+.TP 
+\fB\-\-getbitmap TEXT\fR
+       Get startup text from phone.
+
+.TP 
+\fB\-\-getbitmap DEALER\fR
+       In some models it's possible to save dealer welcome note \- text displayed during enabling phone, which can't be edited from phone menu.  Here you can get it.
+
+.TP 
+\fB\-\-setbitmap STARTUP file|1|2|3\fR
+       Set startup logo in phone. It can be static (then you will have to give file name) or one of predefined animated (only some phones like Nokia 3310 or 3330 supports it)
+
+.TP 
+\fB\-\-setbitmap CALLER location [file]\fR
+       Set caller logo.
+
+.TP 
+\fB\-\-setbitmap OPERATOR [file [netcode]]\fR
+       Set operator logo in phone. When won't give file and netcode, operator logo will be removed from phone. When will give only filename, operator logo will be displayed for your current GSM operator. When give additionaly network code, it will be displayed for this operator: 
+       mygnokii \fB\-\-setbitmap OPERATOR file "260 02"\fR
+
+.TP 
+\fB\-\-setbitmap PICTURE file location\fR
+
+.TP 
+\fB\-\-setbitmap TEXT text\fR
+
+.TP 
+\fB\-\-setbitmap DEALER text\fR
+
+.TP 
+\fB\-\-copybitmap inputfile[outputfile[OPERATOR|PICTURE|STARTUP|CALLER]]\fR
+       Allow to convert logos files to another. When give ONLY inputfile, output will be written to stdout using ASCII art. When give output file and format, in some file formats (like NLM) will be set indicator informing about logo type to given.
+
+.TP 
+\fB\-\-savesms TEXT [\-folder number][\-reply][\-sender number][\-flash]
+                    [\-smscset number][\-smscnumber number][\-len len]
+                    [\-enablefax][\-disablefax][\-enablevoice][\-unsent]
+                    [\-disablevoice][\-enableemail][\-disableemail][\-read] 
+                    [\-voidsms][\-unicode][\-inputunicode][\-unread]\fR
+.br                           
+
+       Take text from stdin and save as text SMS into SIM/phone memory. 
+.br
+       \-folder number     \- save to specified folder. Numerate folders from 1.
+                            The most often folder 1 = "Inbox", 2 = "Outbox",etc.
+                            Use \fB\-\-getsmsfolders to get folder list.\fR
+       \-unread            \- makes message unread. In some phones (like 6210)
+                            you won't see unread sms envelope after saving such
+                            sms. In some phones with internal SMS memory (like
+                            6210) after using it SIM SMS memory will be used
+       \-read              \- makes message read. In some phones with internal
+                            SMS memory (like 6210) after using it SIM SMS
+                            memory will be used
+       \-unsent            \- makes message unsent
+       \-reply             \- reply SMSC is set
+       \-sender number     \- set sender number (default: "MyGnokii2")
+       \-flash             \- Class 0 SMS
+       \-smscset number    \- SMSC will be taken from set "number". Default set:1
+       \-smscnumber number \- SMSC number
+       \-len len           \- specify, how many chars will be read. When use this
+                            option and text will be longer than 1 SMS, will be
+                            splitted into more linked SMS
+       \-enablevoice       \- sms will set such indicators. Text will be cut to 1
+       \-disablevoice        sms.
+       \-enablefax
+       \-disablefax
+       \-enableemail
+       \-disableemail
+       \-voidsms           \- many phones after receiving it won't display anything, only beep, vibrate or turn on light.  Text will be cut to 1 sms.
+       \-unicode           \- SMS will be saved in Unicode format
+       \-inputunicode      \- input text is in Unicode.
+                            TIP: You can create Unicode file using WordPad in Win32 (during saving select "Unicode Text Document" format).  In Unix can use for example YUdit.
+
+     \fI  TIP: when use ~ char in sms text and \-unicode option (Unicode coding required), text of sms after ~ char will blink in some phones (like N33xx)\fR
+
+.TP  \fB\-\-savesms RINGTONE file [\-folder number][\-sender number][\-reply]
+                                    [\-smscset number][\-smscnumber number]
+                                    [\-long][\-unread][\-read][\-unsent][\-scale]\fR
+
+       Read RTTL ringtone from file and save as SMS into SIM/phone memory.
+       Ringtone is saved in Nokia format.
+       \-folder number     \- save to specified folder. Numerate forlders from 1.  The most often folder 1 = "Inbox",2 = "Outbox",etc.
+       \-unread            \- makes message unread. In some phones (like 6210) you won't see unread sms envelope after saving such sms. In some phones with internal SMS memory (like 6210) after using it SMS memory will be used
+       \-read              \- makes message read. In some phones with internal
+                            SMS memory (like 6210) after using it SMS memory
+                            will be used
+       \-unsent            \- makes message unsent
+       \-reply             \- reply SMSC is set
+       \-sender number     \- set sender number
+       \-flash             \- Class 0 SMS
+       \-smscset number    \- SMSC will be taken from set "number". Default set:1
+       \-smscnumber number \- SMSC number
+       \-long              \- ringtone is saved using Profile style. It can be longer (and saved in 2 SMS), but decoded only by newer phones (like 33xx)
+      \-scale              \- ringtone will have Scale info for each note. It will allow to edit it correctly later in phone composer (for example, in 33xx)
+
+.TP  \fB\-\-savesms OPERATOR file [\-folder number][\-sender number][\-reply]
+                                    [\-netcode netcode][\-smscset number][\-read]
+                                    [\-smscnumber number][\-unread][\-unsent]\fR
+
+       Save operator logo as sms (Nokia format \- size 72x14).
+
+.TP  \fB\-\-savesms CALLER file [\-folder number][\-sender number][\-unread]
+                                  [\-reply][\-smscset number][\-smscnumber number]
+                                  [\-unsent][\-read]\fR
+
+       Save caller logo as sms (Nokia format \- size 72x14).
+
+.TP 
+\fB\-\-savesms PICTURE file [\-folder number][\-sender number][\-unicode]
+                                   [\-smscset number][\-smscnumber number][\-read]
+                                   [\-text text][\-reply][\-unread][\-unsent]\fR
+
+       Save Picture Image as sms (Nokia format \- size 72x28).
+
+.TP 
+\fB\-\-savesms BOOKMARK file location [\-folder number][\-reply][\-unsent]
+                                             [\-sender number][\-smscset number]
+                                             [\-smscnumber number][\-unread]
+                                             [\-read] \fR
+
+       Read WAP bookmark from file created by \fB\-\-backup option and saves in\fR
+       Nokia format as SMS
+
+
+.TP 
+\fB\-\-savesms SETTINGS file location [\-folder number][\-reply][\-unsent]
+                                             [\-sender number][\-smscset number]
+                                             [\-smscnumber number][\-unread]
+                                             [\-read]\fR
+
+       Read WAP settings from file created by \fB\-\-backup\fR option and saves in
+       Nokia format as SMS
+
+.TP 
+\fB\-\-savesms CALENDAR file location [\-folder number][\-sender number]
+                                             [\-smscset number][\-unsent][\-reply]
+                                             [\-smscnumber number][\-unread]
+                                             [\-read]\fR
+		               
+       Read calendar note from file created by \fB\-\-backup option and saves in\fR
+       VCALENDAR 1.0 format as SMS
+
+.TP 
+\fB\-\-savesms VCARD10|VCARD21 file SM|ME location [\-folder number]
+                                                          [\-smscset number]
+                                                          [\-reply][\-unread]
+                                                          [\-smscnumber number]
+                                                          [\-sender number]
+                                                          [\-read][\-unsent]\fR
+
+       Read phonebook entry from file created by \fB\-\-backup\fR option and saves in VCARD 1.0 (only name and default number) or VCARD 2.1 (all entry details with all numbers, text and name) format as SMS
+
+.TP 
+\fB\-\-savesms PROFILE name bitmap ringtone [\-folder number][\-reply]
+                                                   [\-smscset number][\-unsent]
+                                                   [\-smscnumber number][\-read]
+                                                   [\-sender number][\-unread]\fR
+
+       Read ringtone (RTTL) format and bitmap (Picture Image size) and name and save as Nokia profile.
+
+.TP 
+\fB\-\-savesms EMSSOUND [\-number number][\-file file][\-folder number]\fR
+                               [\-reply][\-smscset number][\-smscnumber number]
+                               [\-sender number][\-unread][\-read][\-unsent]
+
+       Save SMS with predefined EMS sound (when use \-number) or ringtone given by user (\-file option reads ringtone from RTTL or compatible file)
+
+.TP 
+\fB\-\-savesms EMSANIMATION [\-number number][\-file file][\-folder number]
+                                   [\-smscset number][\-smscnumber number][\-read]
+                                   [\-sender number][\-unread][\-unsent][\-reply] \fR
+                                   
+       When use \-number, there is saved SMS with predefined EMS animation number. When use option \-file, next frame of animation is read from file (so, you have to use \-file 4 times, when use 1 frame files and want have full animation). Size of each frame is 16x16 or 8x8.
+
+.TP 
+\fB\-\-savesms EMSBITMAP file [\-folder number][\-reply][\-smscset number]\fR
+                                     [\-smscnumber number][\-sender number]
+                                     [\-unread][\-read][\-unsent]
+       Saves SMS with EMS bitmap (32x32 or 16x16 or 8x8)
+
+.TP 
+\fB\-\-sendsms TEXT destination [\-reply][\-flash][\-smscset number]
+                                       [\-smscnumber number][\-len len]
+                                       [\-enablefax][\-disablefax][\-enablevoice]
+                                       [\-disablevoice][\-enableemail][\-report]
+                                       [\-disableemail][\-voidsms][\-unicode]
+                                       [\-inputunicode]\fR
+.TP 
+\fB\-\-sendsms RINGTONE destination file [\-reply][\-smscset number]
+                                                [\-long][\-smscnumber number]
+                                                [\-report][\-scale]\fR
+.TP 
+\fB\-\-sendsms OPERATOR destination file [\-reply][\-smscset number]
+                                                [\-netcode netcode][\-report]
+                                                [\-smscnumber number]\fR
+.TP 
+\fB\-\-sendsms CALLER destination file [\-reply][\-smscset number]
+                                              [\-report][\-smscnumber number]\fR
+.TP 
+\fB\-\-sendsms PICTURE destination file [\-reply][\-smscset number]
+                                               [\-report][\-smscnumber number]
+                                               [\-unicode][\-text text]\fR
+.TP 
+\fB\-\-sendsms BOOKMARK destination file location [\-smscset number]
+                                                         [\-reply][\-report]
+                                                         [\-smscnumber number]\fR
+.TP 
+\fB\-\-sendsms SETTINGS destination file location [\-smscset number]
+                                                         [\-smscnumber number]
+                                                         [\-report][\-reply]\fR
+.TP 
+\fB\-\-sendsms CALENDAR destination file location [\-smscset number]
+                                                         [\-smscnumber number]
+                                                         [\-report][\-reply]\fR
+.TP 
+\fB\-\-sendsms VCARD10|VCARD21 destination file SM|ME location
+                        [\-reply][\-smscset number][\-smscnumber number][\-report]\fR
+.TP 
+\fB\-\-sendsms PROFILE destination name bitmap ringtone
+                        [\-reply][\-smscset number][\-smscnumber number][\-report]\fR
+.TP 
+\fB\-\-sendsms EMSSOUND destination[\-number number][\-file file][\-reply]
+                                          [\-smscset number][\-smscnumber number]
+                                          [\-report]\fR
+.TP 
+\fB\-\-sendsms EMSANIMATION destination [\-number number][\-file file]
+                                               [\-smscset number][\-reply]
+                                               [\-smscnumber number][\-report]\fR
+.TP 
+\fB\-\-sendsms EMSBITMAP destination file [\-reply][\-smscset number]
+                                                 [\-smscnumber number][\-report]\fR
+
+.TP 
+\fB\-\-nokiagetoperatorname\fR
+       6110.c phones have place for name for one GSM network (of course, with flashing it's possible to change all names, bumygnokii2 is not flasher ;\-)). You can get this name using this option.
+
+.TP 
+\fB\-\-nokiasetoperatorname networkcode name\fR
+
+.TP 
+\fB\-\-nokiatests\fR
+       Make tests for Nokia DCT3 phones
+       NOTE: EEPROM test can show error, when your phone has EEPROM in flash
+             (like in 82xx/7110/62xx/33xx). The same Clock test will show error
+             when phone doesn't have internal battery for clock (like 3xxx)
+
+.TP 
+\fB\-\-nokianetmonitor test\fR
+       Takes output or set netmonitor for Nokia DCT3 phones.
+       TIP: For more info about this option, please visit http://marcin\-wiacek.topnet.pl and read netmonitor manual.
+       TIP: test 243 enables all tests (after using command "mygnokii \fB\-\-nokianetmonitor 243" in some phones like 6210 or 9210\fR have to reboot them to see netmonitor menu)
+
+.TP 
+\fB\-\-nokianetmonitor36\fR
+       Reset counters from netmonitor test 36 in Nokia DCT3 phones.
+       TIP: For more info about this option, please visit http://marcin\-wiacek.topnet.pl and read netmonitor manual.
+
+.TP 
+\fB\-\-nokiasetphonemenus\fR
+       Enable all (?) possible menus for DCT3 Nokia phones:
+
+       1. ALS (Alternative Line Service) option menu
+       2. vibra menu for 3210
+       3. 3315 features in 3310 5.45 and higher
+       4. two additional games (React and Logic) for 3210 5.31 and higher
+
+.TP 
+\fB\-\-backup file\fR
+       Backup your phone to file. It's possible to backup (depends on phone):
+
+       * phonebook from SIM and phone memory
+       * calendar notes
+       * SMSC settings
+       * operator logo
+       * startup (static) logo or startup text
+       * WAP bookmarks
+       * WAP settings
+       * caller logos and groups
+       * user ringtones
+
+       when use text backup files. List can be extended on request.
+
+       TIP: if you will backup settings tmygnokii2 text file, it will be possible to edit it. It's easy: many things in this file will be written double \- once in Unicode, once in ASCII. When you will remove Unicode versionmygnokii2 will use ASCII on \fB\-\-restore\fR (and you can easy edit ASCII text) and will convert it according to your OS locale. When will be available Unicode version of text, it will be used instead of ASCII (usefull with Unicode phones \- it isn't important, what locale is set in computer and no conversion Unicode \-> ASCII and ASCII \-> Unicode is done).
+
+.TP 
+\fB\-\-backupsms file\fR
+
+.TP 
+\fB\-\-restore file\fR
+       Restore settings written in file created using \fB\-\-backup option.\fR All things backup'ed by \fB\-\-backup (excluding WAP settings) can be\fR restored (when made backup tmygnokii2 text file).
+
+.TP 
+\fB\-\-restoresms file\fR
+
+.TP 
+\fB\-\-decodesniff MBUS2|IRDA file [phonemodel]\fR
+       Option available only, imygnokii2 was compiled with debug.  Allows to decode sniffs. See /docs/develop/develop.txt for more details.
+
+.TP 
+\fB\-\-decodebinarydump file [phonemodel]\fR
+       After using option "logfile" with name "binary" (see /readme for info about this method of reporting bugs) created file can be decoded using this option. It's available only, imygnokii2 was compiled with debug.
+
+.SH "FILES"
+.LP 
+\fI$HOMEDIR/.gnokiirc\fP 
+\fI/usr/share/doc/mygnkokii2/*</fP>
+\fI/dev/ircomm?\fR
+\fI/dev/ttyS?\fR
+
+
+.SH "EXAMPLES"
+.LP 
+To check it out, edit ~/.gnokirc and put there something like
+
+[mygnokii].br 
+port = /dev/ircomm0.br 
+model = 8210.br 
+connection = irda.br 
+ 
+and try:
+.LP 
+mygnokii \fB\-\-identify\fR
+.LP 
+
+.SH "AUTHORS"
+.LP 
+Marcin Wiacek <me@myhost.org>
+
+Here are some people, who somehow helped in this project. Probably not
+everyone is mentioned. If you think, you're missed, please let us know:
+   
+all people developing gnokii (some ideas are from it) like \fIPavel Janik\fR, \fIPawel Kot\fR, \fIManfred Jonsson\fR, ... (see CREDITS from gnokii) all people responsible for mygnokii (mygnokii2 is based on it too) like \fIGabriele Zappi\fR, \fIRalf Thelen\fR, .... (see CREDITS from mygnokii)g \fIMarcin Wiacek\fR \- author of all this mess ;\-)  \fIMarkus Plail & Tibor Harsszegi\fR \- for DCT4 help  \fIFrederick Ros \fR\- 5210 help \fIJan Kratochvil \fR\- AT commands  \fIWalek\fR \- fixes 
+.SH "SEE ALSO"
+.LP 
+gnokii(1) xgnokii(2)
+http://www.gnokii.org
+http://marcin\-wiacek.topnet.pl
