@@ -5,7 +5,7 @@
  CC               = gcc
  CFLAGS           = -O2 -Wall -Wno-format-y2k -pthread
 -LDLIBS           =  -L/usr/lib/mysql -lmysqlclient -lz -lcrypt -lnsl -lm -lc -lnss_files -lnss_dns -lresolv -lc -lnss_files -lnss_dns -lresolv  -pthread -lbluetooth
-+LDLIBS           =  -L/usr/lib/mysql -lmysqlclient -lz -lcrypt -lnsl -lm -lc -lresolv -lc -lresolv  -pthread -lbluetooth
++LDLIBS           =  -lmysqlclient -lz -lcrypt -pthread -lbluetooth
  INSTALL          = /usr/bin/install
  FIND             = /usr/bin/find
  RPMBUILD         = /usr/bin/rpmbuild
