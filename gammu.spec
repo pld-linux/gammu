@@ -59,6 +59,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc changelog docs/* readme.txt
 %attr(755,root,root) %{_bindir}/%{name}
-%config(noreplace) %{_sysconfdir}/gammurc
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/gammurc
 %{_examplesdir}/%{name}
 %{_mandir}/man1/*.1*
