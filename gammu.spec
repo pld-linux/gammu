@@ -1,5 +1,5 @@
 Summary:	Linux/Unix tool suite for Nokia mobile phones
-Summary(pl):	Linuksowy/Uniksowy zestaw narzêdzi dla telefonów komórkowych Nokia
+Summary(pl):	Linuksowy/uniksowy zestaw narzêdzi dla telefonów komórkowych Nokia
 Name:		gammu
 Version:	0.99.0
 Release:	0.1
