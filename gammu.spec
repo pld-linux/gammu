@@ -1,13 +1,13 @@
 Summary:	Linux/Unix tool suite for Nokia mobile phones
 Summary(pl):	Linuksowy/Uniksowy zestaw narzêdzi dla telefonów komórkowych Nokia
 Name:		gammu
-Version:	0.93.0
-Release:	1
+Version:	0.97.7
+Release:	0.1
 Epoch:		1
 License:	GPL v2
 Group:		Applications/Communications
 Source0:	http://www.mwiacek.com/zips/gsm/%{name}/older/%{name}-%{version}.tar.gz
-# Source0-md5:	03ca5b89a16f867b1157ac629a2d05ff
+# Source0-md5:	0f3fc2bb522c9065f5d02d8dab7d0b43
 Patch0:		%{name}-etc_dir.patch
 URL:		http://www.mwiacek.com/english/gsm/gammu/gammu.html
 BuildRequires:	autoconf
