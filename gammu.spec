@@ -16,6 +16,7 @@ Source0:	http://www.mwiacek.com/english/zips/%{name}.tar.gz
 Patch0:		%{name}-etc_dir.patch
 URL:		http://www.mwiacek.com/english/gsm/gammu/gammu.html
 BuildRequires:	autoconf
+BuildRequires:  bluez-libs-devel
 Provides:	mygnokii2
 Obsoletes:	mygnokii2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
