@@ -1,13 +1,18 @@
+%define         major   0
+%define         minor   79
+
+%define         ver    %{major}%{minor}
+
 Summary:	Linux/Unix tool suite for Nokia mobile phones
 Summary(pl):	Linuksowy/Uniksowy zestaw narzêdzi dla telefonów komórkowych Nokia
 Name:		gammu
-Version:	0.64
-Release:	3
+Version:	%{major}.%{minor}
+Release:	1
 Epoch:		1
 License:	GPL v2
 Group:		Applications/Communications
 Source0:	http://www.mwiacek.com/english/zips/%{name}.tar.gz
-# Source0-md5:	7f15627bb8c39337db1b3ecc46f78bbe
+# Source0-md5:	418bbe4e808f9e4e9e93e3c42206735d
 Patch0:		%{name}-etc_dir.patch
 URL:		http://www.mwiacek.com/english/gsm/gammu/gammu.html
 BuildRequires:	autoconf
@@ -35,7 +40,7 @@ WAP, daty/czasu, budzika, dzwonienia itp. Mo¿e tak¿e wykonywaæ pe³ne
 kopie zapasowe danych i odtwarzaæ je.
 
 %prep
-%setup -q -n %{name}
+%setup -q -n %{name}-%{ver}
 %patch0 -p1
 
 %build
@@ -53,7 +58,7 @@ install %{name}/%{name} $RPM_BUILD_ROOT%{_bindir}
 install docs/examples/config/gammurc $RPM_BUILD_ROOT%{_sysconfdir}
 mv -f docs/docs/english/%{name}.1 $RPM_BUILD_ROOT%{_mandir}/man1
 mv -f docs/examples $RPM_BUILD_ROOT%{_examplesdir}/%{name}
-mv -f docs/default $RPM_BUILD_ROOT%{_examplesdir}/%{name}
+mv -f docs/develop $RPM_BUILD_ROOT%{_examplesdir}/%{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
