@@ -2,7 +2,7 @@ Summary:	Linux/Unix tool suite for Nokia mobile phones
 Summary(pl):	Linuksowy/uniksowy zestaw narzêdzi dla telefonów komórkowych Nokia
 Name:		gammu
 Version:	1.00.0
-Release:	1
+Release:	2
 Epoch:		1
 License:	GPL v2
 Group:		Applications/Communications
@@ -10,6 +10,7 @@ Source0:	http://www.mwiacek.com/zips/gsm/gammu/stable/1_0x/%{name}-%{version}.ta
 # Source0-md5:	9d921f9c5b6f3b8b76a69720e2d9f173
 Patch0:		%{name}-etc_dir.patch
 Patch1:		%{name}-no_nss.patch
+Patch2:		%{name}-sparc-speeds.patch
 URL:		http://www.mwiacek.com/gsm/soft/gammu.html
 BuildRequires:	autoconf
 BuildRequires:	bluez-libs-devel
@@ -41,6 +42,9 @@ kopie zapasowe danych i odtwarzaæ je.
 %setup -q
 #%patch0 -p1
 %patch1
+%ifarch sparc
+%patch2 -p1
+%endif
 
 %build
 cd cfg/autoconf
@@ -58,6 +62,7 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_examplesdir}/%{name}}
 %{__make} installshared \
 	DESTDIR=$RPM_BUILD_ROOT \
 	prefix=%{_prefix} \
+	INSTALL_LIB_DIR=%{_libdir} \
 	INSTALL_MAN_DIR=%{_mandir}/man1 \
 	FIND=/usr/bin/find
 
@@ -66,7 +71,8 @@ cp -r docs/{examples,develop} $RPM_BUILD_ROOT%{_examplesdir}/%{name}
 
 rm -rf $RPM_BUILD_ROOT%{_docdir}/%{name}
 # anybody feels like developing gammu-based apps?
-rm -rf $RPM_BUILD_ROOT{%{_includedir},%{_pkgconfigdir},%{_libdir}/*.{so,a}}
+rm -rf $RPM_BUILD_ROOT{%{_includedir},%{_libdir}/*.{so,a}}
+rm -rf $RPM_BUILD_ROOT%{_prefix}/lib/pkgconfig # yes, not pkgconfigdir
 
 %clean
 rm -rf $RPM_BUILD_ROOT
