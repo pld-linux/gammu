@@ -15,6 +15,7 @@ Patch1:		%{name}-no_nss.patch
 URL:		http://www.mwiacek.com/gsm/soft/gammu.html
 BuildRequires:	autoconf
 BuildRequires:	bluez-libs-devel
+BuildRequires:	mysql-devel
 Provides:	mygnokii2
 Obsoletes:	mygnokii2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
