@@ -42,8 +42,23 @@ kopie zapasowe danych i odtwarzaæ je.
 %build
 cd cfg/autoconf
 %{__autoconf}
-%configure
-cd ../..
+%configure	\
+	--enable-cb 			\
+	--enable-7110incoming 		\
+	--enable-6210calendar 		\
+	--enable-fbus 			\
+	--enable-mbus 			\
+	--enable-fbusirda 		\
+	--enable-phonetblue 		\
+	--enable-fbusdku5 		\
+	--enable-fbuspl2303 		\
+	--enable-fbusdlr3  		\
+	--enable-obexgen 		\
+	--enable-mroutergen 		\
+	--enable-mrouterblue  		\
+	--enable-irdaphonet 		\
+	--enable-irdaobex		
+cd ../..	
 %{__make}
 
 %install
