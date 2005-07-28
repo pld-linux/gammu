@@ -1,11 +1,11 @@
---- cfg/Makefile.cfg~	2004-10-24 16:12:49.000000000 +0200
-+++ cfg/Makefile.cfg	2004-10-28 20:00:25.474589744 +0200
+--- cfg/Makefile.cfg~  2005-07-27 15:00:05.000000000 +0200
++++ cfg/Makefile.cfg       2005-07-28 11:52:09.000000000 +0200
 @@ -10,7 +10,7 @@
  ECHO             = /bin/echo
  CC               = gcc
  CFLAGS           = -O2 -fPIC -Wall -Wno-format-y2k -pthread
--LDLIBS           =  -L/usr/lib/mysql -lmysqlclient -lz -lcrypt -lnsl -lm -lc -lnss_files -lnss_dns -lresolv -lc -lnss_files -lnss_dns -lresolv  -pthread -lbluetooth
-+LDLIBS           =  -lmysqlclient -lz -lcrypt -pthread -lbluetooth
+-LDLIBS           =   -pthread
++LDLIBS           =   -lmysqlclient -lz -lcrypt -pthread -lbluetooth
  INSTALL          = /usr/bin/install
  FIND             = /bin/find
- RPMBUILD         = /usr/bin/rpmbuild
+ RPMBUILD         = /bin/rpm
