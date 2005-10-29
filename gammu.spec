@@ -41,10 +41,8 @@ kopie zapasowe danych i odtwarzaæ je.
 %prep
 %setup -q
 #%patch0 -p1
-%patch1
-%ifarch sparc
+%patch1 -p0
 %patch2 -p1
-%endif
 
 %build
 cd cfg/autoconf
@@ -59,7 +57,7 @@ cd ../..
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_examplesdir}/%{name}}
+install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_examplesdir}/%{name}-%{version}}
 %{__make} installshared \
 	DESTDIR=$RPM_BUILD_ROOT \
 	prefix=%{_prefix} \
@@ -68,12 +66,11 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_examplesdir}/%{name}}
 	FIND=/usr/bin/find
 
 install docs/examples/config/gammurc $RPM_BUILD_ROOT%{_sysconfdir}
-cp -r docs/{examples,develop} $RPM_BUILD_ROOT%{_examplesdir}/%{name}
+cp -r docs/{examples,develop} $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
 rm -rf $RPM_BUILD_ROOT%{_docdir}/%{name}
 # anybody feels like developing gammu-based apps?
-rm -rf $RPM_BUILD_ROOT{%{_includedir},%{_libdir}/*.{so,a}}
-rm -rf $RPM_BUILD_ROOT%{_prefix}/lib/pkgconfig # yes, not pkgconfigdir
+rm -rf $RPM_BUILD_ROOT{%{_includedir},%{_libdir}/{*.{so,a},pkgconfig}}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -86,7 +83,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc changelog docs/* readme.txt
 %attr(755,root,root) %{_bindir}/%{name}
 %attr(755,root,root) %{_libdir}/*.so.*
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/gammurc
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/gammurc
 %{_datadir}/%{name}
-%{_examplesdir}/%{name}
+%{_examplesdir}/%{name}-%{version}
 %{_mandir}/man1/*
