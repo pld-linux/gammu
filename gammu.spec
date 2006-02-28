@@ -51,8 +51,8 @@ cd cfg/autoconf
 	--disable-static \
 	--enable-cb \
 	--enable-7110incoming \
-	--enable-6210calendar 		
-cd ../..	
+	--enable-6210calendar
+cd ../..
 %{__make} shared
 
 %install
