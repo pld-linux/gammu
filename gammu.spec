@@ -2,7 +2,7 @@ Summary:	Linux/Unix tool suite for Nokia mobile phones
 Summary(pl):	Linuksowy/uniksowy zestaw narzêdzi dla telefonów komórkowych Nokia
 Name:		gammu
 Version:	1.02.0
-Release:	4
+Release:	5
 Epoch:		1
 License:	GPL v2
 Group:		Applications/Communications
@@ -43,7 +43,8 @@ kopie zapasowe danych i odtwarzaæ je.
 #%patch0 -p1
 %patch1 -p0
 %patch2 -p1
-ln -s ../../version cfg/autoconf/VERSION
+cp -f version cfg/autoconf/VERSION
+mv docs/docs/english/gammu.1 .
 
 %build
 cd cfg/autoconf
@@ -53,20 +54,22 @@ cd cfg/autoconf
 	--without-rpmdir \
 	--enable-cb \
 	--enable-7110incoming \
-	--enable-6210calendar
+	--enable-6210calendar \
+	--with-localedir=%{_datadir}/%{name}
 cd ../..
 %{__make} shared
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_examplesdir}/%{name}-%{version}}
-%{__make} installshared \
+install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_examplesdir}/%{name}-%{version},%{_datadir}/%{name}}
+%{__make} installlocales installlibonly \
 	DESTDIR=$RPM_BUILD_ROOT \
 	prefix=%{_prefix} \
 	INSTALL_LIB_DIR=%{_libdir} \
 	INSTALL_MAN_DIR=%{_mandir}/man1 \
-	FIND=/usr/bin/find
+	FIND=find
 
+install -D gammu.1 $RPM_BUILD_ROOT%{_mandir}/man1/%{name}.1
 install docs/examples/config/gammurc $RPM_BUILD_ROOT%{_sysconfdir}
 cp -r docs/{examples,develop} $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
@@ -82,10 +85,18 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc changelog docs/* readme.txt
+%doc changelog docs/docs/english/gammu.txt other/bash readme.txt
+%doc %lang(it) docs/docs/italian
 %attr(755,root,root) %{_bindir}/%{name}
 %attr(755,root,root) %{_libdir}/*.so.*
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/gammurc
-%{_datadir}/%{name}
+%dir %{_datadir}/%{name}
+%lang(cs) %{_datadir}/gammu/gammu_cs.txt
+%lang(de) %{_datadir}/gammu/gammu_de.txt
+%lang(es) %{_datadir}/gammu/gammu_es.txt
+%lang(it) %{_datadir}/gammu/gammu_it.txt
+%lang(pl) %{_datadir}/gammu/gammu_pl.txt
+%lang(ru) %{_datadir}/gammu/gammu_ru.txt
+%{_datadir}/gammu/gammu_us.txt
 %{_examplesdir}/%{name}-%{version}
 %{_mandir}/man1/*
