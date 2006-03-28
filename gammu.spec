@@ -43,12 +43,14 @@ kopie zapasowe danych i odtwarzaæ je.
 #%patch0 -p1
 %patch1 -p0
 %patch2 -p1
+ln -s ../../version cfg/autoconf/VERSION
 
 %build
 cd cfg/autoconf
 %{__autoconf}
 %configure \
 	--disable-static \
+	--without-rpmdir \
 	--enable-cb \
 	--enable-7110incoming \
 	--enable-6210calendar
