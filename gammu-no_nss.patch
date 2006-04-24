@@ -1,11 +1,11 @@
---- cfg/Makefile.cfg~  2005-07-27 15:00:05.000000000 +0200
-+++ cfg/Makefile.cfg       2005-07-28 11:52:09.000000000 +0200
-@@ -10,7 +10,7 @@
- ECHO             = /bin/echo
- CC               = gcc
- CFLAGS           = -O2 -fPIC -Wall -Wno-format-y2k -pthread
--LDLIBS           =   -pthread
-+LDLIBS           =   -lmysqlclient -lz -lcrypt -pthread -lbluetooth
- INSTALL          = /usr/bin/install
- FIND             = /bin/find
- RPMBUILD         = /bin/rpm
+--- gammu-1.06.00/cfg/Makefile.cfg.wiget	2006-04-18 22:35:39.000000000 +0200
++++ gammu-1.06.00/cfg/Makefile.cfg	2006-04-24 23:09:26.000000000 +0200
+@@ -11,7 +11,7 @@
+ ECHO            = /bin/echo
+ CC              = gcc
+ CFLAGS          = -O2 -fPIC -Wall -Wno-format-y2k -pthread
+-LDLIBS          =  -lm   -pthread -lbluetooth
++LDLIBS          = -lmysqlclient -lz -lcrypt -lm -pthread -lbluetooth
+ SMSD_LIBS       = 
+ INSTALL         = /usr/bin/install
+ FIND            = /bin/find
