@@ -1,17 +1,17 @@
 Summary:	Linux/Unix tool suite for Nokia mobile phones
 Summary(pl):	Linuksowy/uniksowy zestaw narzêdzi dla telefonów komórkowych Nokia
 Name:		gammu
-Version:	1.02.0
-Release:	5
+Version:	1.06.00
+Release:	1
 Epoch:		1
 License:	GPL v2
 Group:		Applications/Communications
-Source0:	http://www.mwiacek.com/zips/gsm/gammu/stable/1_0x/%{name}-%{version}.tar.gz
-# Source0-md5:	f8d0b2c6cc045891b6d8f0021246a464
+Source0:	http://cihar.com/gammu/zips/gammu/stable/latest/%{name}-%{version}.tar.bz2
+# Source0-md5:	d7ad43992fbc32bd9e371afeb73e487f
 Patch0:		%{name}-etc_dir.patch
 Patch1:		%{name}-no_nss.patch
 Patch2:		%{name}-sparc-speeds.patch
-URL:		http://www.gammu.net/
+URL:		http://www.gammu.org/
 BuildRequires:	autoconf
 BuildRequires:	bluez-libs-devel
 BuildRequires:	mysql-devel
@@ -41,8 +41,7 @@ kopie zapasowe danych i odtwarzaæ je.
 %prep
 %setup -q
 #%patch0 -p1
-%patch1 -p0
-%patch2 -p1
+%patch1 -p1
 cp -f version cfg/autoconf/VERSION
 mv docs/docs/english/gammu.1 .
 
@@ -85,7 +84,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc changelog docs/docs/english/gammu.txt other/bash readme.txt
+%doc changelog docs/docs/english/gammu.htm other/bash readme.txt
 %doc %lang(it) docs/docs/italian
 %attr(755,root,root) %{_bindir}/%{name}
 %attr(755,root,root) %{_libdir}/*.so.*
