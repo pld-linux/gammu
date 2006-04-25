@@ -10,7 +10,6 @@ Source0:	http://cihar.com/gammu/zips/gammu/stable/latest/%{name}-%{version}.tar.
 # Source0-md5:	d7ad43992fbc32bd9e371afeb73e487f
 Patch0:		%{name}-etc_dir.patch
 Patch1:		%{name}-no_nss.patch
-Patch2:		%{name}-sparc-speeds.patch
 URL:		http://www.gammu.org/
 BuildRequires:	autoconf
 BuildRequires:	bluez-libs-devel
