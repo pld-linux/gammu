@@ -1,5 +1,5 @@
 Summary:	Linux/Unix tool suite for Nokia mobile phones
-Summary(pl):	Linuksowy/uniksowy zestaw narzêdzi dla telefonów komórkowych Nokia
+Summary(pl.UTF-8):   Linuksowy/uniksowy zestaw narzÄ™dzi dla telefonÃ³w komÃ³rkowych Nokia
 Name:		gammu
 Version:	1.07.00
 Release:	1
@@ -27,15 +27,15 @@ WaveCom, IPAQ, and other). It has a command line version with many
 functions for ringtones, phonebook, SMS, logos, WAP, date/time, alarm,
 calls, etc. It can also make full backups and restore them.
 
-%description -l pl
-Gammu (poprzednio znany jako MyGnokii2) jest narzêdziem do zarz±dzania
-ró¿nymi telefonami komórkowymi i modemami. Aktualnie obs³uguje Nokie
+%description -l pl.UTF-8
+Gammu (poprzednio znany jako MyGnokii2) jest narzÄ™dziem do zarzÄ…dzania
+rÃ³Å¼nymi telefonami komÃ³rkowymi i modemami. Aktualnie obsÅ‚uguje Nokie
 3210, 33xx, 3410, 51xx, 5210, 5510, 61xx, 62xx, 63xx, 6510, 7110,
-82xx, 8310, 9110 i 3210 oraz urz±dzenia AT (takie jak Siemens,
-Alcatel, WaveCom, IPAQ i inne). Ma wersjê dzia³aj±c± z linii poleceñ z
-wieloma funkcjami do dzwonków, ksi±¿ki telefonicznej, SMS-ów, logo,
-WAP, daty/czasu, budzika, dzwonienia itp. Mo¿e tak¿e wykonywaæ pe³ne
-kopie zapasowe danych i odtwarzaæ je.
+82xx, 8310, 9110 i 3210 oraz urzÄ…dzenia AT (takie jak Siemens,
+Alcatel, WaveCom, IPAQ i inne). Ma wersjÄ™ dziaÅ‚ajÄ…cÄ… z linii poleceÅ„ z
+wieloma funkcjami do dzwonkÃ³w, ksiÄ…Å¼ki telefonicznej, SMS-Ã³w, logo,
+WAP, daty/czasu, budzika, dzwonienia itp. MoÅ¼e takÅ¼e wykonywaÄ‡ peÅ‚ne
+kopie zapasowe danych i odtwarzaÄ‡ je.
 
 %prep
 %setup -q
