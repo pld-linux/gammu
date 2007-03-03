@@ -6,7 +6,7 @@ Release:	1
 Epoch:		1
 License:	GPL v2
 Group:		Applications/Communications
-Source0:    http://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.bz2
+Source0:	http://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.bz2
 # Source0-md5:	05b623c30cfd69ea97f0bc054b19928d
 Patch0:		%{name}-etc_dir.patch
 Patch1:		%{name}-no_nss.patch
@@ -15,10 +15,10 @@ URL:		http://www.gammu.org/
 BuildRequires:	autoconf
 BuildRequires:	bluez-libs-devel
 BuildRequires:	mysql-devel
-BuildRequires:  postgresql-devel
+BuildRequires:	postgresql-devel
 Provides:	mygnokii2
 Obsoletes:	mygnokii2
-Requires:       %{name}-libs = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -53,9 +53,9 @@ Header files for Gammu tool suite for mobile phones.
 Pliki nagłówkowe zestawu narzędzi dla telefonów komórkowych Gammu.
 
 %package libs
-Summary:        Gammu library
-Summary(pl.UTF-8):      Biblioteka Gammu
-Group:          Libraries
+Summary:	Gammu library
+Summary(pl.UTF-8):	Biblioteka Gammu
+Group:		Libraries
 
 %description libs
 Gammu tool suite library.
@@ -64,10 +64,10 @@ Gammu tool suite library.
 Biblioteka zestawu narzędzi dla telefonów komórkowych Gammu.
 
 %package static
-Summary:        Gammu static library
-Summary(pl.UTF-8):      Biblioteka statyczna Gammu
-Group:          Development/Libraries
-Requires:       %{name}-libs = %{epoch}:%{version}-%{release}
+Summary:	Gammu static library
+Summary(pl.UTF-8):	Biblioteka statyczna Gammu
+Group:		Development/Libraries
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 
 %description static
 Gammu static library.
