@@ -130,7 +130,6 @@ rm -rf $RPM_BUILD_ROOT
 %doc %lang(it) docs/user/gammu.it.txt docs/user/readme.it.txt
 %attr(755,root,root) %{_bindir}/%{name}
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/gammurc
-%dir %{_datadir}/%{name}
 %{_examplesdir}/%{name}-%{version}
 %{_mandir}/man1/*
 
