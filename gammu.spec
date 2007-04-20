@@ -1,19 +1,20 @@
 Summary:	GNU tool suite for mobile phones
 Summary(pl.UTF-8):	Zestaw narzędzi GNU dla telefonów komórkowych
 Name:		gammu
-Version:	1.10.0
+Version:	1.10.3
 Release:	1
 Epoch:		1
 License:	GPL v2
 Group:		Applications/Communications
 Source0:	http://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.bz2
-# Source0-md5:	05b623c30cfd69ea97f0bc054b19928d
+# Source0-md5:	a7657a6053bcb6212c7287ac99d21015
 Patch0:		%{name}-etc_dir.patch
 Patch1:		%{name}-no_nss.patch
 Patch2:		%{name}-libpq_dir.patch
 URL:		http://www.gammu.org/
 BuildRequires:	autoconf
 BuildRequires:	bluez-libs-devel
+BuildRequires:	gettext-devel
 BuildRequires:	mysql-devel
 BuildRequires:	postgresql-devel
 Provides:	mygnokii2
@@ -81,7 +82,7 @@ Biblioteka statyczna zestawu narzędzi dla telefonów komórkowych Gammu.
 %patch1 -p1
 %patch2 -p1
 cp -f VERSION cfg/autoconf/VERSION
-mv docs/docs/english/gammu.1 .
+mv docs/user/gammu.1 .
 
 %build
 cd cfg/autoconf
@@ -99,7 +100,7 @@ cd ../..
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_examplesdir}/%{name}-%{version},%{_datadir}/%{name}}
-%{__make} installlibonly \
+%{__make} installlibonly installlocales \
 	DESTDIR=$RPM_BUILD_ROOT \
 	prefix=%{_prefix} \
 	INSTALL_LIB_DIR=%{_libdir} \
@@ -108,8 +109,8 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_examplesdir}/%{name}-%{version},%{_
 
 install -D gammu.1 $RPM_BUILD_ROOT%{_mandir}/man1/%{name}.1
 install docs/examples/config/gammurc $RPM_BUILD_ROOT%{_sysconfdir}
-install docs/docs/locale/*.txt $RPM_BUILD_ROOT%{_datadir}/%{name}
 cp -r docs/{examples,develop} $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+%find_lang %{name}
 cd $RPM_BUILD_ROOT%{_libdir}
 ln -sf libGammu.so.1.0 libGammu.so
 
@@ -123,20 +124,13 @@ rm -rf $RPM_BUILD_ROOT
 %postun -p /sbin/ldconfig
 %endif
 
-%files
+%files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc ChangeLog docs/docs/english/gammu.htm other/bash README
-%doc %lang(it) docs/docs/italian
+%doc ChangeLog docs/user/gammu.htm docs/user/readme.htm other/bash README
+%doc %lang(it) docs/user/gammu.it.txt docs/user/readme.it.txt
 %attr(755,root,root) %{_bindir}/%{name}
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/gammurc
 %dir %{_datadir}/%{name}
-%lang(cs) %{_datadir}/%{name}/gammu_cs.txt
-%lang(de) %{_datadir}/%{name}/gammu_de.txt
-%lang(es) %{_datadir}/%{name}/gammu_es.txt
-%lang(it) %{_datadir}/%{name}/gammu_it.txt
-%lang(pl) %{_datadir}/%{name}/gammu_pl.txt
-%lang(ru) %{_datadir}/%{name}/gammu_ru.txt
-%{_datadir}/%{name}/gammu_us.txt
 %{_examplesdir}/%{name}-%{version}
 %{_mandir}/man1/*
 
