@@ -13,3 +13,14 @@
  #endif
  
  #include "../../common/service/sms/gsmsms.h"
+--- gammu-1.10.3/cfg/autoconf/configure.in.orig	2007-04-16 15:49:28.000000000 +0200
++++ gammu-1.10.3/cfg/autoconf/configure.in	2007-04-20 22:07:30.000000000 +0200
+@@ -115,7 +115,7 @@
+ AC_ARG_ENABLE(pgsql,
+         [  --disable-pgsql         Disable postgreSQL support in SMSD],
+         [pgsql="no"],
+-        [AC_CHECK_HEADERS(postgresql/libpq-fe.h,
++        [AC_CHECK_HEADERS(libpq-fe.h,
+             [pgsql="yes"
+              SMSD_LIBS="$SMSD_LIBS -L$(pg_config --libdir) -lpq"],
+             [pgsql="no"])
