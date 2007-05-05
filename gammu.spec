@@ -1,13 +1,13 @@
 Summary:	GNU tool suite for mobile phones
 Summary(pl.UTF-8):	Zestaw narzędzi GNU dla telefonów komórkowych
 Name:		gammu
-Version:	1.10.4
+Version:	1.10.5
 Release:	1
 Epoch:		1
 License:	GPL v2
 Group:		Applications/Communications
 Source0:	http://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.bz2
-# Source0-md5:	b16aa4ce250df2829322dc14dd5cf6da
+# Source0-md5:	816d8da561bf0dcceffcc9120001db3c
 Patch0:		%{name}-etc_dir.patch
 Patch1:		%{name}-no_nss.patch
 Patch2:		%{name}-libpq_dir.patch
@@ -126,7 +126,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc ChangeLog docs/user/gammu.htm docs/user/readme.htm other/bash README
+%doc ChangeLog docs/user/gammu.htm docs/user/readme.htm other/bash README SUPPORTERS
 %doc %lang(it) docs/user/gammu.it.txt docs/user/readme.it.txt
 %attr(755,root,root) %{_bindir}/%{name}
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/gammurc
