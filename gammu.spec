@@ -1,19 +1,18 @@
 Summary:	GNU tool suite for mobile phones
 Summary(pl.UTF-8):	Zestaw narzędzi GNU dla telefonów komórkowych
 Name:		gammu
-Version:	1.11.0
+Version:	1.11.92
 Release:	1
 Epoch:		1
 License:	GPL v2
 Group:		Applications/Communications
 Source0:	http://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.bz2
-# Source0-md5:	7b46148677ba82dd2f4eca749bc9e975
+# Source0-md5:	01f34c88bd2559f243ae51905fd9fdc3
 Patch0:		%{name}-etc_dir.patch
 Patch1:		%{name}-no_nss.patch
-Patch2:		%{name}-libpq_dir.patch
 URL:		http://www.gammu.org/
-BuildRequires:	autoconf
 BuildRequires:	bluez-libs-devel
+BuildRequires:	cmake
 BuildRequires:	gettext-devel
 BuildRequires:	mysql-devel
 BuildRequires:	postgresql-devel
@@ -61,7 +60,7 @@ Group:		Libraries
 %description libs
 Gammu tool suite library.
 
-%description devel -l pl.UTF-8
+%description libs -l pl.UTF-8
 Biblioteka zestawu narzędzi dla telefonów komórkowych Gammu.
 
 %package static
@@ -73,46 +72,43 @@ Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 %description static
 Gammu static library.
 
-%description devel -l pl.UTF-8
+%description static -l pl.UTF-8
 Biblioteka statyczna zestawu narzędzi dla telefonów komórkowych Gammu.
 
 %prep
 %setup -q
 #%patch0 -p1
 %patch1 -p1
-%patch2 -p1
-cp -f VERSION cfg/autoconf/VERSION
-mv docs/user/gammu.1 .
 
 %build
-cd cfg/autoconf
-%{__autoconf}
-%configure \
-	--disable-static \
-	--without-rpmdir \
-	--enable-cb \
-	--enable-7110incoming \
-	--enable-6210calendar \
-	--with-localedir=%{_datadir}/%{name}
-cd ../..
-%{__make} shared
+mkdir -p build
+cd build
+%cmake ../ \
+	-DCMAKE_INSTALL_PREFIX="%{_prefix}" \
+	-DENABLE_SHARED=OFF \
+	%{?debug:-DCMAKE_BUILD_TYPE="Debug"}
+%{__make}
+mv common/libGammu.a ..
+%cmake ../ \
+	-DCMAKE_INSTALL_PREFIX="%{_prefix}" \
+	-DENABLE_SHARED=ON \
+	%{?debug:-DCMAKE_BUILD_TYPE="Debug"}
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_examplesdir}/%{name}-%{version},%{_datadir}/%{name}}
-%{__make} installlibonly installlocales \
-	DESTDIR=$RPM_BUILD_ROOT \
-	prefix=%{_prefix} \
-	INSTALL_LIB_DIR=%{_libdir} \
-	INSTALL_MAN_DIR=%{_mandir}/man1 \
-	FIND=find
+install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_examplesdir}/%{name}-%{version}}
+cd build
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
+cd ..
 
-install -D gammu.1 $RPM_BUILD_ROOT%{_mandir}/man1/%{name}.1
 install docs/examples/config/gammurc $RPM_BUILD_ROOT%{_sysconfdir}
 cp -r docs/{examples,develop} $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+install libGammu.a $RPM_BUILD_ROOT%{_libdir}
 %find_lang %{name}
 cd $RPM_BUILD_ROOT%{_libdir}
-ln -sf libGammu.so.1.0 libGammu.so
+ln -sf libGammu.so.1.11.92 libGammu.so
 
 rm -rf $RPM_BUILD_ROOT%{_docdir}/%{name}
 
@@ -135,6 +131,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/%{name}-config
 %{_libdir}/*.so
 %{_includedir}/*
 %{_pkgconfigdir}/*
