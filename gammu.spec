@@ -9,7 +9,6 @@ Group:		Applications/Communications
 Source0:	http://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.bz2
 # Source0-md5:	01f34c88bd2559f243ae51905fd9fdc3
 Patch0:		%{name}-etc_dir.patch
-Patch1:		%{name}-no_nss.patch
 URL:		http://www.gammu.org/
 BuildRequires:	bluez-libs-devel
 BuildRequires:	cmake
@@ -78,7 +77,6 @@ Biblioteka statyczna zestawu narzędzi dla telefonów komórkowych Gammu.
 %prep
 %setup -q
 #%patch0 -p1
-%patch1 -p1
 
 %build
 mkdir -p build
