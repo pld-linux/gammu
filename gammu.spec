@@ -15,9 +15,9 @@ BuildRequires:	cmake
 BuildRequires:	gettext-devel
 BuildRequires:	mysql-devel
 BuildRequires:	postgresql-devel
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Provides:	mygnokii2
 Obsoletes:	mygnokii2
-Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -39,18 +39,6 @@ wieloma funkcjami do dzwonków, książki telefonicznej, SMS-ów, logo,
 WAP, daty/czasu, budzika, dzwonienia itp. Może także wykonywać pełne
 kopie zapasowe danych i odtwarzać je.
 
-%package devel
-Summary:	Header files for Gammu tool suite for mobile phones
-Summary(pl.UTF-8):	Pliki nagłówkowe zestawu narzędzi dla telefonów komórkowych Gammu
-Group:		Development/Libraries
-Requires:	%{name} = %{epoch}:%{version}-%{release}
-
-%description devel
-Header files for Gammu tool suite for mobile phones.
-
-%description devel -l pl.UTF-8
-Pliki nagłówkowe zestawu narzędzi dla telefonów komórkowych Gammu.
-
 %package libs
 Summary:	Gammu library
 Summary(pl.UTF-8):	Biblioteka Gammu
@@ -62,11 +50,23 @@ Gammu tool suite library.
 %description libs -l pl.UTF-8
 Biblioteka zestawu narzędzi dla telefonów komórkowych Gammu.
 
+%package devel
+Summary:	Header files for Gammu tool suite for mobile phones
+Summary(pl.UTF-8):	Pliki nagłówkowe zestawu narzędzi dla telefonów komórkowych Gammu
+Group:		Development/Libraries
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+
+%description devel
+Header files for Gammu tool suite for mobile phones.
+
+%description devel -l pl.UTF-8
+Pliki nagłówkowe zestawu narzędzi dla telefonów komórkowych Gammu.
+
 %package static
 Summary:	Gammu static library
 Summary(pl.UTF-8):	Biblioteka statyczna Gammu
 Group:		Development/Libraries
-Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 
 %description static
 Gammu static library.
@@ -96,10 +96,9 @@ mv common/libGammu.a ..
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_examplesdir}/%{name}-%{version}}
-cd build
-%{__make} install \
+
+%{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
-cd ..
 
 install docs/examples/config/gammurc $RPM_BUILD_ROOT%{_sysconfdir}
 cp -r docs/{examples,develop} $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
@@ -113,10 +112,8 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}/%{name}
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%if %{with ldconfig}
 %post   -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
-%endif
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
@@ -127,16 +124,16 @@ rm -rf $RPM_BUILD_ROOT
 %{_examplesdir}/%{name}-%{version}
 %{_mandir}/man1/*
 
+%files libs
+%defattr(755,root,root,755)
+%attr(755,root,root) %{_libdir}/*.so.*
+
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/%{name}-config
-%{_libdir}/*.so
+%attr(755,root,root) %{_libdir}/*.so
 %{_includedir}/*
 %{_pkgconfigdir}/*
-
-%files libs
-%defattr(755,root,root,755)
-%{_libdir}/*.so.*
 
 %files static
 %defattr(755,root,root,755)
