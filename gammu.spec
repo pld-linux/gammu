@@ -108,8 +108,6 @@ install docs/examples/config/gammurc $RPM_BUILD_ROOT%{_sysconfdir}
 cp -r docs/{examples,develop} $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 install libGammu.a $RPM_BUILD_ROOT%{_libdir}
 %find_lang %{name}
-cd $RPM_BUILD_ROOT%{_libdir}
-ln -sf libGammu.so.1.11.92 libGammu.so
 
 rm -rf $RPM_BUILD_ROOT%{_docdir}/%{name}
 
