@@ -1,13 +1,13 @@
 Summary:	GNU tool suite for mobile phones
 Summary(pl.UTF-8):	Zestaw narzędzi GNU dla telefonów komórkowych
 Name:		gammu
-Version:	1.12.0
-Release:	0.1
+Version:	1.12.92
+Release:	1
 Epoch:		1
 License:	GPL v2
 Group:		Applications/Communications
 Source0:	http://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.bz2
-# Source0-md5:	260035c1647bab396dfd9b35d78a3ad8
+# Source0-md5:	5bcb87a39e9004c654e080bf8df7cd43
 Patch0:		%{name}-etc_dir.patch
 URL:		http://www.gammu.org/
 BuildRequires:	bluez-libs-devel
@@ -85,13 +85,17 @@ cd build
 	-DCMAKE_INSTALL_PREFIX="%{_prefix}" \
 	-DENABLE_SHARED=OFF \
 	%{?debug:-DCMAKE_BUILD_TYPE="Debug"} 
-%{__make}
+%{__make} \
+	LDFLAGS="%{rpmldflags} -lm" \
+	LIBS=" -lm"
 mv common/libGammu.a ..
 %cmake ../ \
 	-DCMAKE_INSTALL_PREFIX="%{_prefix}" \
 	-DENABLE_SHARED=ON \
-	%{?debug:-DCMAKE_BUILD_TYPE="Debug"} 
-%{__make}
+	%{?debug:-DCMAKE_BUILD_TYPE="Debug"}  
+%{__make} \
+	LDFLAGS="%{rpmldflags} -lm" \
+	LIBS=" -lm"
 
 %install
 rm -rf $RPM_BUILD_ROOT
