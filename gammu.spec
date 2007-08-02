@@ -85,17 +85,13 @@ cd build
 	-DCMAKE_INSTALL_PREFIX="%{_prefix}" \
 	-DENABLE_SHARED=OFF \
 	%{?debug:-DCMAKE_BUILD_TYPE="Debug"} 
-%{__make} \
-	LDFLAGS="%{rpmldflags} -lm" \
-	LIBS=" -lm"
+%{__make}
 mv common/libGammu.a ..
 %cmake ../ \
 	-DCMAKE_INSTALL_PREFIX="%{_prefix}" \
 	-DENABLE_SHARED=ON \
 	%{?debug:-DCMAKE_BUILD_TYPE="Debug"}  
-%{__make} \
-	LDFLAGS="%{rpmldflags} -lm" \
-	LIBS=" -lm"
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
