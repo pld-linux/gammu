@@ -55,6 +55,7 @@ Summary:	Header files for Gammu tool suite for mobile phones
 Summary(pl.UTF-8):	Pliki nagłówkowe zestawu narzędzi dla telefonów komórkowych Gammu
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Requires:	bluez-libs-devel
 
 %description devel
 Header files for Gammu tool suite for mobile phones.
@@ -83,13 +84,17 @@ mkdir -p build
 cd build
 %cmake ../ \
 	-DCMAKE_INSTALL_PREFIX="%{_prefix}" \
+	-DCMAKE_VERBOSE_MAKEFILE=1 \
 	-DENABLE_SHARED=OFF \
+	-DINSTALL_LIB_DIR=%{_libdir} \
 	%{?debug:-DCMAKE_BUILD_TYPE="Debug"} 
 %{__make}
 mv common/libGammu.a ..
 %cmake ../ \
 	-DCMAKE_INSTALL_PREFIX="%{_prefix}" \
+	-DCMAKE_VERBOSE_MAKEFILE=1 \
 	-DENABLE_SHARED=ON \
+	-DINSTALL_LIB_DIR=%{_libdir} \
 	%{?debug:-DCMAKE_BUILD_TYPE="Debug"}  
 %{__make}
 
@@ -110,8 +115,8 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}/%{name}
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post   -p /sbin/ldconfig
-%postun -p /sbin/ldconfig
+%post   libs -p /sbin/ldconfig
+%postun libs -p /sbin/ldconfig
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
@@ -124,15 +129,16 @@ rm -rf $RPM_BUILD_ROOT
 
 %files libs
 %defattr(755,root,root,755)
-%attr(755,root,root) %{_libdir}/*.so.*
+%attr(755,root,root) %{_libdir}/libGammu.so.*.*
+%attr(755,root,root) %ghost %{_libdir}/libGammu.so.2
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/%{name}-config
-%attr(755,root,root) %{_libdir}/*.so
+%attr(755,root,root) %{_libdir}/libGammu.so
 %{_includedir}/*
-%{_pkgconfigdir}/*
+%{_pkgconfigdir}/gammu.pc
 
 %files static
 %defattr(755,root,root,755)
-%{_libdir}/*.a
+%{_libdir}/libGammu.a
