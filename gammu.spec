@@ -113,6 +113,9 @@ install libGammu.a $RPM_BUILD_ROOT%{_libdir}
 
 rm -rf $RPM_BUILD_ROOT%{_docdir}/%{name}
 
+# for rpm autodeps
+chmod 755 $RPM_BUILD_ROOT%{_libdir}/lib*.so*
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
