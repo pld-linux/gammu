@@ -15,6 +15,7 @@ BuildRequires:	cmake
 BuildRequires:	gettext-devel
 BuildRequires:	mysql-devel
 BuildRequires:	postgresql-devel
+BuildRequires:	rpmbuild(macros) >= 1.293
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Provides:	mygnokii2
 Obsoletes:	mygnokii2
