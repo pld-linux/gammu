@@ -2,7 +2,7 @@ Summary:	GNU tool suite for mobile phones
 Summary(pl.UTF-8):	Zestaw narzędzi GNU dla telefonów komórkowych
 Name:		gammu
 Version:	1.14.0
-Release:	1
+Release:	2
 Epoch:		1
 License:	GPL v2
 Group:		Applications/Communications
@@ -87,7 +87,8 @@ cd build
 	-DCMAKE_INSTALL_PREFIX="%{_prefix}" \
 	-DCMAKE_VERBOSE_MAKEFILE=1 \
 	-DENABLE_SHARED=OFF \
-	-DINSTALL_LIB_DIR=%{_libdir} \
+	-DINSTALL_LIB_DIR=%{_lib} \
+	-DINSTALL_LIBDATA_DIR=%{_libdir} \
 	%{?debug:-DCMAKE_BUILD_TYPE="Debug"} 
 %{__make}
 mv common/libGammu.a ..
@@ -95,7 +96,8 @@ mv common/libGammu.a ..
 	-DCMAKE_INSTALL_PREFIX="%{_prefix}" \
 	-DCMAKE_VERBOSE_MAKEFILE=1 \
 	-DENABLE_SHARED=ON \
-	-DINSTALL_LIB_DIR=%{_libdir} \
+	-DINSTALL_LIB_DIR=%{_lib} \
+	-DINSTALL_LIBDATA_DIR=%{_libdir} \
 	%{?debug:-DCMAKE_BUILD_TYPE="Debug"}  
 %{__make}
 
