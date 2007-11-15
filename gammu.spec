@@ -1,13 +1,13 @@
 Summary:	GNU tool suite for mobile phones
 Summary(pl.UTF-8):	Zestaw narzędzi GNU dla telefonów komórkowych
 Name:		gammu
-Version:	1.13.0
-Release:	2
+Version:	1.14.0
+Release:	1
 Epoch:		1
 License:	GPL v2
 Group:		Applications/Communications
 Source0:	http://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.bz2
-# Source0-md5:	f2a9af55ece850cf5917f1365abd186b
+# Source0-md5:	87b923d623b400c81d88ceb0d4b14b8c
 Patch0:		%{name}-etc_dir.patch
 URL:		http://www.gammu.org/
 BuildRequires:	bluez-libs-devel
@@ -134,7 +134,7 @@ rm -rf $RPM_BUILD_ROOT
 %files libs
 %defattr(755,root,root,755)
 %attr(755,root,root) %{_libdir}/libGammu.so.*.*
-%attr(755,root,root) %ghost %{_libdir}/libGammu.so.2
+#%attr(755,root,root) %ghost %{_libdir}/libGammu.so.2
 
 %files devel
 %defattr(644,root,root,755)
