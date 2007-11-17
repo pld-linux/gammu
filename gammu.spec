@@ -2,7 +2,7 @@ Summary:	GNU tool suite for mobile phones
 Summary(pl.UTF-8):	Zestaw narzędzi GNU dla telefonów komórkowych
 Name:		gammu
 Version:	1.14.0
-Release:	2
+Release:	3
 Epoch:		1
 License:	GPL v2
 Group:		Applications/Communications
@@ -136,7 +136,7 @@ rm -rf $RPM_BUILD_ROOT
 %files libs
 %defattr(755,root,root,755)
 %attr(755,root,root) %{_libdir}/libGammu.so.*.*
-#%attr(755,root,root) %ghost %{_libdir}/libGammu.so.2
+%attr(755,root,root) %ghost %{_libdir}/libGammu.so.3
 
 %files devel
 %defattr(644,root,root,755)
