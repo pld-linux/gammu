@@ -11,7 +11,7 @@ Source0:	http://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.bz2
 Patch0:		%{name}-etc_dir.patch
 URL:		http://www.gammu.org/
 BuildRequires:	bluez-libs-devel
-BuildRequires:	cmake
+BuildRequires:	cmake >= 2.4.6
 BuildRequires:	gettext-devel
 BuildRequires:	mysql-devel
 BuildRequires:	postgresql-devel
