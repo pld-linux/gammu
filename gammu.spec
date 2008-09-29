@@ -83,18 +83,18 @@ Biblioteka statyczna zestawu narzędzi dla telefonów komórkowych Gammu.
 %build
 mkdir -p build
 cd build
-%cmake ../ \
+%cmake .. \
 	-DCMAKE_INSTALL_PREFIX="%{_prefix}" \
-	-DCMAKE_VERBOSE_MAKEFILE=1 \
+	-DCMAKE_VERBOSE_MAKEFILE=ON \
 	-DENABLE_SHARED=OFF \
 	-DINSTALL_LIB_DIR=%{_lib} \
 	-DINSTALL_LIBDATA_DIR=%{_libdir} \
 	%{?debug:-DCMAKE_BUILD_TYPE="Debug"} 
 %{__make}
 mv common/libGammu.a ..
-%cmake ../ \
+%cmake .. \
 	-DCMAKE_INSTALL_PREFIX="%{_prefix}" \
-	-DCMAKE_VERBOSE_MAKEFILE=1 \
+	-DCMAKE_VERBOSE_MAKEFILE=ON \
 	-DENABLE_SHARED=ON \
 	-DINSTALL_LIB_DIR=%{_lib} \
 	-DINSTALL_LIBDATA_DIR=%{_libdir} \
