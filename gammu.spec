@@ -1,5 +1,5 @@
-Summary:	Open source tool suite for mobile phones
-Summary(pl.UTF-8):	Zestaw narzędzi otwartego oprogramoawnia dla telefonów komórkowych
+Summary:	Tool suite for mobile phones
+Summary(pl.UTF-8):	Zestaw narzędzi do telefonów komórkowych
 Name:		gammu
 Version:	1.22.1
 Release:	1
