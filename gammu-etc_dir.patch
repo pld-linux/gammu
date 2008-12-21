@@ -1,5 +1,5 @@
---- gsmstate.c.orig	2008-12-16 14:11:54.000000000 +0100
-+++ gsmstate.c	2008-12-21 13:59:48.000000000 +0100
+--- gammu/common/gsmstate.c.orig	2008-12-16 14:11:54.000000000 +0100
++++ gammu/common/gsmstate.c	2008-12-21 13:59:48.000000000 +0100
 @@ -971,6 +971,7 @@
  {
  	char configfile[PATH_MAX + 1];
