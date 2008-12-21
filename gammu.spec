@@ -1,17 +1,18 @@
-Summary:	GNU tool suite for mobile phones
-Summary(pl.UTF-8):	Zestaw narzędzi GNU dla telefonów komórkowych
+Summary:	Open source tool suite for mobile phones
+Summary(pl.UTF-8):	Zestaw narzędzi otwartego oprogramoawnia dla telefonów komórkowych
 Name:		gammu
-Version:	1.20.0
-Release:	2
+Version:	1.22.1
+Release:	1
 Epoch:		1
 License:	GPL v2
 Group:		Applications/Communications
 Source0:	http://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.bz2
-# Source0-md5:	e39930e94babd42731e20fc7b33ed12e
+# Source0-md5:	5d06f38d16043600a6b216db42197ea8
 Patch0:		%{name}-etc_dir.patch
 URL:		http://www.gammu.org/
 BuildRequires:	bluez-libs-devel
 BuildRequires:	cmake >= 2.4.6
+BuildRequires:	curl-devel
 BuildRequires:	gettext-devel
 BuildRequires:	mysql-devel
 BuildRequires:	postgresql-devel
@@ -78,7 +79,7 @@ Biblioteka statyczna zestawu narzędzi dla telefonów komórkowych Gammu.
 
 %prep
 %setup -q
-#%patch0 -p1
+%patch0 -p1
 
 %build
 mkdir -p build
@@ -86,19 +87,19 @@ cd build
 %cmake .. \
 	-DCMAKE_INSTALL_PREFIX="%{_prefix}" \
 	-DCMAKE_VERBOSE_MAKEFILE=ON \
-	-DENABLE_SHARED=OFF \
+	-DBUILD_SHARED_LIBS=OFF \
 	-DINSTALL_LIB_DIR=%{_lib} \
 	-DINSTALL_LIBDATA_DIR=%{_libdir} \
-	%{?debug:-DCMAKE_BUILD_TYPE="Debug"} 
+	%{?debug:-DCMAKE_BUILD_TYPE="Debug"}
 %{__make}
 mv common/libGammu.a ..
 %cmake .. \
 	-DCMAKE_INSTALL_PREFIX="%{_prefix}" \
 	-DCMAKE_VERBOSE_MAKEFILE=ON \
-	-DENABLE_SHARED=ON \
+	-DBUILD_SHARED_LIBS=ON \
 	-DINSTALL_LIB_DIR=%{_lib} \
 	-DINSTALL_LIBDATA_DIR=%{_libdir} \
-	%{?debug:-DCMAKE_BUILD_TYPE="Debug"}  
+	%{?debug:-DCMAKE_BUILD_TYPE="Debug"}
 %{__make}
 
 %install
@@ -136,7 +137,7 @@ rm -rf $RPM_BUILD_ROOT
 %files libs
 %defattr(755,root,root,755)
 %attr(755,root,root) %{_libdir}/libGammu.so.*.*
-%attr(755,root,root) %ghost %{_libdir}/libGammu.so.3
+%attr(755,root,root) %ghost %{_libdir}/libGammu.so.5
 
 %files devel
 %defattr(644,root,root,755)
