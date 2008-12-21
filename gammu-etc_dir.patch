@@ -4,7 +4,7 @@
  {
  	char configfile[PATH_MAX + 1];
  	char *envpath;
-+	char *etc_dir;
++	char *home_etc;
  	GSM_Error error;
  
  	*result = NULL;
@@ -13,9 +13,9 @@
  	configfile[0] = 0;
  
 +	/* Try user etc dir */
-+	etc_dir = getenv("ETC_DIR");
-+	if (etc_dir) {
-+		strcat(configfile, etc_dir);
++	home_etc = getenv("HOME_ETC");
++	if (home_etc) {
++		strcat(configfile, home_etc);
 +		strcat(configfile, GAMMURC_NAME);
 +
 +		error = GSM_TryReadGammuRC(configfile, result);
