@@ -1,30 +1,37 @@
-diff -Nru gammu/common/gsmstate.c gammu.new/common/gsmstate.c
---- gammu/common/gsmstate.c	Sat Nov 30 20:15:12 2002
-+++ gammu.new/common/gsmstate.c	Sat Mar 29 12:29:07 2003
-@@ -705,6 +705,7 @@
- 	CFG_Header	*cfg_info;
-         char		*homedir;
-         char		rcfile[201];
-+	char		*etc_dir;
+--- gsmstate.c.orig	2008-12-16 14:11:54.000000000 +0100
++++ gsmstate.c	2008-12-21 13:59:48.000000000 +0100
+@@ -971,6 +971,7 @@
+ {
+ 	char configfile[PATH_MAX + 1];
+ 	char *envpath;
++	char *etc_dir;
+ 	GSM_Error error;
  
- #if defined(WIN32) || defined(DJGPP)
-         homedir = getenv("HOMEDRIVE");
-@@ -713,9 +714,15 @@
-         strncat(rcfile, homedir ? homedir : "", 200);
-         strncat(rcfile, "\\gammurc", 200);
- #else
--        homedir = getenv("HOME");
--        if (homedir) strncpy(rcfile, homedir, 200);
--        strncat(rcfile, "/.gammurc", 200);
-+        etc_dir = getenv("ETC_DIR");
-+        if (etc_dir) {
-+                strncpy(rcfile, etc_dir, 200);
-+                strncat(rcfile, "/gammurc", 200);
-+        } else {
-+                homedir = getenv("HOME");
-+                if (homedir) strncpy(rcfile, homedir, 200);
-+                strncat(rcfile, "/.gammurc", 200);
-+        }
- #endif
+ 	*result = NULL;
+@@ -988,14 +989,24 @@
+ 	/* Reset as we're using strcat */
+ 	configfile[0] = 0;
  
-         if ((cfg_info = CFG_ReadFile(rcfile, false)) == NULL) {
++	/* Try user etc dir */
++	etc_dir = getenv("ETC_DIR");
++	if (etc_dir) {
++		strcat(configfile, etc_dir);
++		strcat(configfile, GAMMURC_NAME);
++
++		error = GSM_TryReadGammuRC(configfile, result);
++		if (error == ERR_NONE) return ERR_NONE;
++	} else {
+ 	/* Try user home */
+-	envpath  = getenv("HOME");
+-	if (envpath) {
++	    envpath  = getenv("HOME");
++	    if (envpath) {
+ 		strcat(configfile, envpath);
+ 		strcat(configfile, GAMMURC_NAME);
+ 
+ 		error = GSM_TryReadGammuRC(configfile, result);
+ 		if (error == ERR_NONE) return ERR_NONE;
++	    }
+ 	}
+ 
+ #if defined(WIN32)
