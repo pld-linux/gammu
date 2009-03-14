@@ -1,13 +1,13 @@
 Summary:	Tool suite for mobile phones
 Summary(pl.UTF-8):	Zestaw narzędzi do telefonów komórkowych
 Name:		gammu
-Version:	1.22.1
+Version:	1.23.1
 Release:	1
 Epoch:		1
 License:	GPL v2
 Group:		Applications/Communications
 Source0:	http://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.bz2
-# Source0-md5:	5d06f38d16043600a6b216db42197ea8
+# Source0-md5:	bb1d23eb766ecd9d21bc79c2f8a1d480
 Patch0:		%{name}-etc_dir.patch
 URL:		http://www.gammu.org/
 BuildRequires:	bluez-libs-devel
@@ -92,7 +92,8 @@ cd build
 	-DINSTALL_LIBDATA_DIR=%{_libdir} \
 	%{?debug:-DCMAKE_BUILD_TYPE="Debug"}
 %{__make}
-mv common/libGammu.a ..
+mv libgammu/libGammu.a ..
+mv smsd/libgsmsd.a ..
 %cmake .. \
 	-DCMAKE_INSTALL_PREFIX="%{_prefix}" \
 	-DCMAKE_VERBOSE_MAKEFILE=ON \
@@ -109,9 +110,11 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_examplesdir}/%{name}-%{version}}
 %{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-install docs/examples/config/gammurc $RPM_BUILD_ROOT%{_sysconfdir}
+install docs/config/gammurc $RPM_BUILD_ROOT%{_sysconfdir}
 cp -r docs/{examples,develop} $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 install libGammu.a $RPM_BUILD_ROOT%{_libdir}
+install libgsmsd.a $RPM_BUILD_ROOT%{_libdir}
+
 %find_lang %{name}
 
 rm -rf $RPM_BUILD_ROOT%{_docdir}/%{name}
@@ -127,25 +130,38 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc ChangeLog docs/user/gammu.htm docs/user/readme.htm other/bash README SUPPORTERS
+%doc AUTHORS BUGS ChangeLog docs/user/gammu.html docs/user/readme.html README README.Python SUPPORTERS
 %doc %lang(it) docs/user/gammu.it.txt docs/user/readme.it.txt
 %attr(755,root,root) %{_bindir}/%{name}
+%attr(755,root,root) %{_bindir}/gammu-smsd
+%attr(755,root,root) %{_bindir}/gammu-smsd-inject
+%attr(755,root,root) %{_bindir}/gammu-smsd-monitor
+%attr(755,root,root) %{_bindir}/jadmaker
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/gammurc
 %{_examplesdir}/%{name}-%{version}
 %{_mandir}/man1/*
+%{_mandir}/man5/*
+%{_mandir}/man7/*
 
 %files libs
 %defattr(755,root,root,755)
 %attr(755,root,root) %{_libdir}/libGammu.so.*.*
-%attr(755,root,root) %ghost %{_libdir}/libGammu.so.5
+%attr(755,root,root) %{_libdir}/libgsmsd.so.*.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgsmsd.so.6
+%attr(755,root,root) %ghost %{_libdir}/libGammu.so.6
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/%{name}-config
 %attr(755,root,root) %{_libdir}/libGammu.so
+%attr(755,root,root) %{_libdir}/libgsmsd.so
 %{_includedir}/*
+%dir %{py_sitedir}/gammu/
+%attr(755,root,root) %{py_sitedir}/gammu/_gammu.so
 %{_pkgconfigdir}/gammu.pc
+%{_pkgconfigdir}/gammu-smsd.pc
 
 %files static
 %defattr(755,root,root,755)
+%{_libdir}/libgsmsd.a
 %{_libdir}/libGammu.a
