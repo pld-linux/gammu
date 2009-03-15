@@ -2,7 +2,7 @@ Summary:	Tool suite for mobile phones
 Summary(pl.UTF-8):	Zestaw narzędzi do telefonów komórkowych
 Name:		gammu
 Version:	1.23.1
-Release:	1
+Release:	2
 Epoch:		1
 License:	GPL v2
 Group:		Applications/Communications
@@ -16,7 +16,9 @@ BuildRequires:	curl-devel
 BuildRequires:	gettext-devel
 BuildRequires:	mysql-devel
 BuildRequires:	postgresql-devel
+BuildRequires:	python-devel >= 1:2.5
 BuildRequires:	rpmbuild(macros) >= 1.293
+BuildRequires:	rpm-pythonprov
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Provides:	mygnokii2
 Obsoletes:	mygnokii2
@@ -64,6 +66,19 @@ Header files for Gammu tool suite for mobile phones.
 
 %description devel -l pl.UTF-8
 Pliki nagłówkowe zestawu narzędzi dla telefonów komórkowych Gammu.
+
+%package -n python-gammu
+Summary:	Python bingings for Gammu library
+Summary(pl.UTF-8):	Wiązania języka Python dla biblioteki Gammu
+Group:		Development/Languages/Python
+%pyrequires_eq	python-modules
+%requires_eq	gammu-libs
+
+%description -n python-gammu
+Python bingings for Gammu library.
+
+%description -l pl.UTF-8 -n python-gammu
+Wiązania języka Python dla biblioteki Gammu.
 
 %package static
 Summary:	Gammu static library
@@ -160,6 +175,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{py_sitedir}/gammu/_gammu.so
 %{_pkgconfigdir}/gammu.pc
 %{_pkgconfigdir}/gammu-smsd.pc
+
+%files -n python-gammu
+%defattr(644,root,root,755)
+%dir %{py_sitedir}/gammu
+%attr(755,root,root) %{py_sitedir}/gammu/*.so
+%{py_sitedir}/gammu/*.py
 
 %files static
 %defattr(755,root,root,755)
