@@ -1,13 +1,13 @@
 Summary:	Tool suite for mobile phones
 Summary(pl.UTF-8):	Zestaw narzędzi do telefonów komórkowych
 Name:		gammu
-Version:	1.23.1
-Release:	2
+Version:	1.24.90
+Release:	1
 Epoch:		1
 License:	GPL v2
 Group:		Applications/Communications
 Source0:	http://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.bz2
-# Source0-md5:	bb1d23eb766ecd9d21bc79c2f8a1d480
+# Source0-md5:	b128b05c1808fa1e887647eefa1830f1
 Patch0:		%{name}-etc_dir.patch
 URL:		http://www.gammu.org/
 BuildRequires:	bluez-libs-devel
@@ -71,8 +71,8 @@ Pliki nagłówkowe zestawu narzędzi dla telefonów komórkowych Gammu.
 Summary:	Python bingings for Gammu library
 Summary(pl.UTF-8):	Wiązania języka Python dla biblioteki Gammu
 Group:		Development/Languages/Python
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 %pyrequires_eq	python-modules
-%requires_eq	gammu-libs
 
 %description -n python-gammu
 Python bingings for Gammu library.
@@ -154,9 +154,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/jadmaker
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/gammurc
 %{_examplesdir}/%{name}-%{version}
-%{_mandir}/man1/*
-%{_mandir}/man5/*
-%{_mandir}/man7/*
+%{_mandir}/man[157]/*
+%lang(cs) %{_mandir}/cs/man[157]/*
 
 %files libs
 %defattr(755,root,root,755)
