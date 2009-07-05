@@ -97,6 +97,7 @@ Summary:	bash-completion for gammu
 Summary(pl.UTF-8):	bashowe uzupełnianie nazw dla gammu
 Group:		Applications/Shells
 Requires:	bash-completion
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description -n bash-completion-gammu
 This package provides bash-completion for gammu.
