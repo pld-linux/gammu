@@ -1,13 +1,13 @@
 Summary:	Tool suite for mobile phones
 Summary(pl.UTF-8):	Zestaw narzędzi do telefonów komórkowych
 Name:		gammu
-Version:	1.24.90
+Version:	1.24.92
 Release:	1
 Epoch:		1
 License:	GPL v2
 Group:		Applications/Communications
 Source0:	http://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.bz2
-# Source0-md5:	b128b05c1808fa1e887647eefa1830f1
+# Source0-md5:	2bd90a7f7b0e51f022357af8dffc4bf6
 Patch0:		%{name}-etc_dir.patch
 URL:		http://www.gammu.org/
 BuildRequires:	bluez-libs-devel
@@ -92,6 +92,18 @@ Gammu static library.
 %description static -l pl.UTF-8
 Biblioteka statyczna zestawu narzędzi dla telefonów komórkowych Gammu.
 
+%package -n bash-completion-gammu
+Summary:	bash-completion for gammu
+Summary(pl.UTF-8):	bashowe uzupełnianie nazw dla gammu
+Group:		Applications/Shells
+Requires:	bash-completion
+
+%description -n bash-completion-gammu
+This package provides bash-completion for gammu.
+
+%description -n bash-completion-gammu -l pl.UTF-8
+Pakiet ten dostarcza bashowe uzupełnianie nazw dla gammu.
+
 %prep
 %setup -q
 %patch0 -p1
@@ -126,7 +138,7 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_examplesdir}/%{name}-%{version}}
 	DESTDIR=$RPM_BUILD_ROOT
 
 install docs/config/gammurc $RPM_BUILD_ROOT%{_sysconfdir}
-cp -r docs/{examples,develop} $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+cp -r docs/develop $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 install libGammu.a $RPM_BUILD_ROOT%{_libdir}
 install libgsmsd.a $RPM_BUILD_ROOT%{_libdir}
 
@@ -185,3 +197,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(755,root,root,755)
 %{_libdir}/libgsmsd.a
 %{_libdir}/libGammu.a
+
+%files -n bash-completion-gammu
+%defattr(644,root,root,755)
+%{_sysconfdir}/bash_completion.d/gammu
