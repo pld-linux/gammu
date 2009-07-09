@@ -1,13 +1,13 @@
 Summary:	Tool suite for mobile phones
 Summary(pl.UTF-8):	Zestaw narzędzi do telefonów komórkowych
 Name:		gammu
-Version:	1.24.92
+Version:	1.25.0
 Release:	1
 Epoch:		1
-License:	GPL v2
+License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.bz2
-# Source0-md5:	2bd90a7f7b0e51f022357af8dffc4bf6
+# Source0-md5:	49cb33609cc8cfb4b1f998319cd12b7c
 Patch0:		%{name}-etc_dir.patch
 URL:		http://www.gammu.org/
 BuildRequires:	bluez-libs-devel
@@ -17,8 +17,8 @@ BuildRequires:	gettext-devel
 BuildRequires:	mysql-devel
 BuildRequires:	postgresql-devel
 BuildRequires:	python-devel >= 1:2.5
-BuildRequires:	rpmbuild(macros) >= 1.293
 BuildRequires:	rpm-pythonprov
+BuildRequires:	rpmbuild(macros) >= 1.293
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Provides:	mygnokii2
 Obsoletes:	mygnokii2
@@ -77,7 +77,7 @@ Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 %description -n python-gammu
 Python bingings for Gammu library.
 
-%description -l pl.UTF-8 -n python-gammu
+%description -n python-gammu -l pl.UTF-8
 Wiązania języka Python dla biblioteki Gammu.
 
 %package static
@@ -96,8 +96,8 @@ Biblioteka statyczna zestawu narzędzi dla telefonów komórkowych Gammu.
 Summary:	bash-completion for gammu
 Summary(pl.UTF-8):	bashowe uzupełnianie nazw dla gammu
 Group:		Applications/Shells
-Requires:	bash-completion
 Requires:	%{name} = %{epoch}:%{version}-%{release}
+Requires:	bash-completion
 
 %description -n bash-completion-gammu
 This package provides bash-completion for gammu.
@@ -171,7 +171,7 @@ rm -rf $RPM_BUILD_ROOT
 %lang(cs) %{_mandir}/cs/man[157]/*
 
 %files libs
-%defattr(755,root,root,755)
+%defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libGammu.so.*.*
 %attr(755,root,root) %{_libdir}/libgsmsd.so.*.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libgsmsd.so.6
@@ -195,7 +195,7 @@ rm -rf $RPM_BUILD_ROOT
 %{py_sitedir}/gammu/*.py
 
 %files static
-%defattr(755,root,root,755)
+%defattr(644,root,root,755)
 %{_libdir}/libgsmsd.a
 %{_libdir}/libGammu.a
 
