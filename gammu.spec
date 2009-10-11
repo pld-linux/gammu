@@ -1,13 +1,13 @@
 Summary:	Tool suite for mobile phones
 Summary(pl.UTF-8):	Zestaw narzędzi do telefonów komórkowych
 Name:		gammu
-Version:	1.25.0
+Version:	1.26.1
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.bz2
-# Source0-md5:	49cb33609cc8cfb4b1f998319cd12b7c
+# Source0-md5:	ba8caab6b21a2ce0fa668f9403b8319a
 Patch0:		%{name}-etc_dir.patch
 URL:		http://www.gammu.org/
 BuildRequires:	bluez-libs-devel
@@ -144,6 +144,7 @@ install libGammu.a $RPM_BUILD_ROOT%{_libdir}
 install libgsmsd.a $RPM_BUILD_ROOT%{_libdir}
 
 %find_lang %{name}
+%find_lang libgammu
 
 rm -rf $RPM_BUILD_ROOT%{_docdir}/%{name}
 
@@ -170,12 +171,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man[157]/*
 %lang(cs) %{_mandir}/cs/man[157]/*
 
-%files libs
+%files libs -f libgammu.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libGammu.so.*.*
 %attr(755,root,root) %{_libdir}/libgsmsd.so.*.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgsmsd.so.6
-%attr(755,root,root) %ghost %{_libdir}/libGammu.so.6
+%attr(755,root,root) %ghost %{_libdir}/libgsmsd.so.?
+%attr(755,root,root) %ghost %{_libdir}/libGammu.so.?
 
 %files devel
 %defattr(644,root,root,755)
