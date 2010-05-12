@@ -2,12 +2,14 @@ Summary:	Tool suite for mobile phones
 Summary(pl.UTF-8):	Zestaw narzędzi do telefonów komórkowych
 Name:		gammu
 Version:	1.27.0
-Release:	1
+Release:	2
 Epoch:		1
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.bz2
 # Source0-md5:	320f2a6fa5e0510cc5200f9bef15f92e
+Source1:	%{name}-smsd.init
+Source2:	%{name}-smsd.sysconfig
 Patch0:		%{name}-etc_dir.patch
 URL:		http://www.gammu.org/
 BuildRequires:	bluez-libs-devel
@@ -20,6 +22,7 @@ BuildRequires:	python-devel >= 1:2.5
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.293
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Suggests:	%{name}-smsd = %{epoch}:%{version}-%{release}
 Provides:	mygnokii2
 Obsoletes:	mygnokii2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -42,6 +45,26 @@ Alcatel, WaveCom, IPAQ i inne). Ma wersję działającą z linii poleceń z
 wieloma funkcjami do dzwonków, książki telefonicznej, SMS-ów, logo,
 WAP, daty/czasu, budzika, dzwonienia itp. Może także wykonywać pełne
 kopie zapasowe danych i odtwarzać je.
+
+%package smsd
+Summary:	Gammu SMS Daemon
+Summary(pl.UTF-8):	Demon SMS Gammu
+Group:		Applications/Communications
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+
+%description smsd
+Gammu SMS Daemon is a program that periodically scans GSM modem for
+received messages, stores them in defined storage and also sends
+messages enqueued in this storage. It is perfect tool for managing big
+amounts of received or sent messages and automatically process them.
+
+%description smsd -l pl.UTF-8
+Demon SMS Gammu jest programem, któr okresowo sprawdza czy modem GSM
+odebrał jakieś wiadomości, przechowuje je w zdefiniowanym 
+zasobie a także wysyła wiadomości skolejkowane w tym zasobie.
+Jest idealnym narzędziem do zarządzania dużą ilością
+otrzymanych lub wysyłanych wiadomości i atomatycznego
+przetwarzania ich.
 
 %package libs
 Summary:	Gammu library
@@ -142,6 +165,12 @@ install docs/config/gammurc $RPM_BUILD_ROOT%{_sysconfdir}
 cp -r docs/develop $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 install libGammu.a $RPM_BUILD_ROOT%{_libdir}
 install libgsmsd.a $RPM_BUILD_ROOT%{_libdir}
+install -d $RPM_BUILD_ROOT%{_sysconfdir}/%{name}-smsd $RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig}
+install docs/config/smsdrc $RPM_BUILD_ROOT%{_sysconfdir}/%{name}-smsd/ttyS0.conf
+install -p %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}-smsd
+cp -a %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/%{name}-smsd
+install -d $RPM_BUILD_ROOT/%{_varrun}/%{name}-smsd
+install -d $RPM_BUILD_ROOT/%{_sharedstatedir}/%{name}-smsd
 
 %find_lang %{name}
 %find_lang libgammu
@@ -157,19 +186,48 @@ rm -rf $RPM_BUILD_ROOT
 %post   libs -p /sbin/ldconfig
 %postun libs -p /sbin/ldconfig
 
+%pre smsd
+%groupadd -g 251 gammu-smsd
+%useradd -u 251 -d /var/lib/gammu-smsd -s /bin/false -c "Gammu SMSD user" -G dialout -g gammu-smsd gammu-smsd
+
+%post smsd
+/sbin/chkconfig --add gammu-smsd
+%service gammu-smsd restart "Gammu SMSD"
+
+%preun smsd
+if [ "$1" = "0" ]; then
+        %service gammu-smsd stop
+        /sbin/chkconfig --del gammu-smsd
+fi
+
+%postun smsd
+if [ "$1" = "0" ]; then
+        %groupremove gammu-smsd
+        %userremove gammu-smsd
+fi
+
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS BUGS ChangeLog docs/user/gammu.html docs/user/readme.html README README.Python SUPPORTERS
 %doc %lang(it) docs/user/gammu.it.txt docs/user/readme.it.txt
 %attr(755,root,root) %{_bindir}/%{name}
-%attr(755,root,root) %{_bindir}/gammu-smsd
-%attr(755,root,root) %{_bindir}/gammu-smsd-inject
-%attr(755,root,root) %{_bindir}/gammu-smsd-monitor
 %attr(755,root,root) %{_bindir}/jadmaker
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/gammurc
 %{_examplesdir}/%{name}-%{version}
 %{_mandir}/man[157]/*
 %lang(cs) %{_mandir}/cs/man[157]/*
+
+%files smsd
+%defattr(640,root,root,750)
+%doc docs/sql/*.sql
+%attr(755,root,root) %{_bindir}/gammu-smsd
+%attr(755,root,root) %{_bindir}/gammu-smsd-inject
+%attr(755,root,root) %{_bindir}/gammu-smsd-monitor
+%attr(754,root,root) /etc/rc.d/init.d/%{name}-smsd
+%config(noreplace) /etc/sysconfig/%{name}-smsd
+%{_sysconfdir}/%{name}-smsd
+%attr(750,root,gammu-smsd) %{_varrun}/%{name}-smsd
+%attr(750,gammu-smsd,gammu-smsd) %{_sharedstatedir}/%{name}-smsd
 
 %files libs -f libgammu.lang
 %defattr(644,root,root,755)
