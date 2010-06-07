@@ -1,13 +1,13 @@
 Summary:	Tool suite for mobile phones
 Summary(pl.UTF-8):	Zestaw narzędzi do telefonów komórkowych
 Name:		gammu
-Version:	1.27.93
+Version:	1.27.94
 Release:	0.beta.1
 Epoch:		1
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.bz2
-# Source0-md5:	08cce72dd9bc1f94559139037407f8fd
+# Source0-md5:	03847f335caa6c8f9d20622556cf69ba
 Patch0:		%{name}-etc_dir.patch
 URL:		http://www.gammu.org/
 BuildRequires:	bluez-libs-devel
