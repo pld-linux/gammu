@@ -1,13 +1,13 @@
 Summary:	Tool suite for mobile phones
 Summary(pl.UTF-8):	Zestaw narzędzi do telefonów komórkowych
 Name:		gammu
-Version:	1.27.0
-Release:	3
+Version:	1.28.0
+Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.bz2
-# Source0-md5:	320f2a6fa5e0510cc5200f9bef15f92e
+# Source0-md5:	1cddf45348b0c8cebcc14c9e693c6c9a
 Source1:	%{name}-smsd.init
 Source2:	%{name}-smsd.sysconfig
 Patch0:		%{name}-etc_dir.patch
@@ -60,11 +60,10 @@ amounts of received or sent messages and automatically process them.
 
 %description smsd -l pl.UTF-8
 Demon SMS Gammu jest programem, któr okresowo sprawdza czy modem GSM
-odebrał jakieś wiadomości, przechowuje je w zdefiniowanym 
-zasobie a także wysyła wiadomości skolejkowane w tym zasobie.
-Jest idealnym narzędziem do zarządzania dużą ilością
-otrzymanych lub wysyłanych wiadomości i atomatycznego
-przetwarzania ich.
+odebrał jakieś wiadomości, przechowuje je w zdefiniowanym zasobie a
+także wysyła wiadomości skolejkowane w tym zasobie. Jest idealnym
+narzędziem do zarządzania dużą ilością otrzymanych lub wysyłanych
+wiadomości i atomatycznego przetwarzania ich.
 
 %package libs
 Summary:	Gammu library
@@ -208,7 +207,7 @@ fi
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc AUTHORS BUGS ChangeLog docs/user/gammu.html docs/user/readme.html README README.Python SUPPORTERS
+%doc AUTHORS BUGS ChangeLog docs/user/gammu.html docs/user/gammu.html README README.Python
 %doc %lang(it) docs/user/gammu.it.txt docs/user/readme.it.txt
 %attr(755,root,root) %{_bindir}/%{name}
 %attr(755,root,root) %{_bindir}/jadmaker
@@ -218,13 +217,13 @@ fi
 %lang(cs) %{_mandir}/cs/man[157]/*
 
 %files smsd
-%defattr(640,root,root,750)
+%defattr(644,root,root,755)
 %doc docs/sql/*.sql
 %attr(755,root,root) %{_bindir}/gammu-smsd
 %attr(755,root,root) %{_bindir}/gammu-smsd-inject
 %attr(755,root,root) %{_bindir}/gammu-smsd-monitor
 %attr(754,root,root) /etc/rc.d/init.d/%{name}-smsd
-%config(noreplace) /etc/sysconfig/%{name}-smsd
+%config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/%{name}-smsd
 %{_sysconfdir}/%{name}-smsd
 %attr(750,root,gammu-smsd) %{_varrun}/%{name}-smsd
 %attr(750,gammu-smsd,gammu-smsd) %{_sharedstatedir}/%{name}-smsd
