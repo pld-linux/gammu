@@ -140,6 +140,7 @@ cd build
 	-DBUILD_SHARED_LIBS=OFF \
 	-DINSTALL_LIB_DIR=%{_lib} \
 	-DINSTALL_LIBDATA_DIR=%{_libdir} \
+	-DBUILD_PYTHON=%{_bindir}/python%{py_ver} \
 	%{?debug:-DCMAKE_BUILD_TYPE="Debug"}
 %{__make}
 mv libgammu/libGammu.a ..
@@ -150,6 +151,7 @@ mv smsd/libgsmsd.a ..
 	-DBUILD_SHARED_LIBS=ON \
 	-DINSTALL_LIB_DIR=%{_lib} \
 	-DINSTALL_LIBDATA_DIR=%{_libdir} \
+	-DBUILD_PYTHON=%{_bindir}/python%{py_ver} \
 	%{?debug:-DCMAKE_BUILD_TYPE="Debug"}
 %{__make}
 
