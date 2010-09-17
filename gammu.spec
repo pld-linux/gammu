@@ -1,13 +1,13 @@
 Summary:	Tool suite for mobile phones
 Summary(pl.UTF-8):	Zestaw narzędzi do telefonów komórkowych
 Name:		gammu
-Version:	1.28.0
+Version:	1.28.91
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.bz2
-# Source0-md5:	1cddf45348b0c8cebcc14c9e693c6c9a
+# Source0-md5:	eac372a1cd6ea24b7bbef28ed98864a3
 Source1:	%{name}-smsd.init
 Source2:	%{name}-smsd.sysconfig
 Patch0:		%{name}-etc_dir.patch
@@ -163,7 +163,7 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_examplesdir}/%{name}-%{version}}
 	DESTDIR=$RPM_BUILD_ROOT
 
 install docs/config/gammurc $RPM_BUILD_ROOT%{_sysconfdir}
-cp -r docs/develop $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+#cp -r docs/develop $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 install libGammu.a $RPM_BUILD_ROOT%{_libdir}
 install libgsmsd.a $RPM_BUILD_ROOT%{_libdir}
 install -d $RPM_BUILD_ROOT%{_sysconfdir}/%{name}-smsd $RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig}
