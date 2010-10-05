@@ -1,13 +1,13 @@
 Summary:	Tool suite for mobile phones
 Summary(pl.UTF-8):	Zestaw narzędzi do telefonów komórkowych
 Name:		gammu
-Version:	1.28.91
+Version:	1.28.92
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.bz2
-# Source0-md5:	eac372a1cd6ea24b7bbef28ed98864a3
+# Source0-md5:	43abbb2fce727c18eb858ff8197c6799
 Source1:	%{name}-smsd.init
 Source2:	%{name}-smsd.sysconfig
 Patch0:		%{name}-etc_dir.patch
@@ -20,7 +20,7 @@ BuildRequires:	mysql-devel
 BuildRequires:	postgresql-devel
 BuildRequires:	python-devel >= 1:2.5
 BuildRequires:	rpm-pythonprov
-BuildRequires:	rpmbuild(macros) >= 1.293
+BuildRequires:	rpmbuild(macros) >= 1.577
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Suggests:	%{name}-smsd = %{epoch}:%{version}-%{release}
 Provides:	mygnokii2
@@ -135,24 +135,20 @@ Pakiet ten dostarcza bashowe uzupełnianie nazw dla gammu.
 mkdir -p build
 cd build
 %cmake .. \
-	-DCMAKE_INSTALL_PREFIX="%{_prefix}" \
 	-DCMAKE_VERBOSE_MAKEFILE=ON \
 	-DBUILD_SHARED_LIBS=OFF \
 	-DINSTALL_LIB_DIR=%{_lib} \
 	-DINSTALL_LIBDATA_DIR=%{_libdir} \
-	-DBUILD_PYTHON=%{_bindir}/python%{py_ver} \
-	%{?debug:-DCMAKE_BUILD_TYPE="Debug"}
+	-DBUILD_PYTHON=%{_bindir}/python%{py_ver}
 %{__make}
 mv libgammu/libGammu.a ..
 mv smsd/libgsmsd.a ..
 %cmake .. \
-	-DCMAKE_INSTALL_PREFIX="%{_prefix}" \
 	-DCMAKE_VERBOSE_MAKEFILE=ON \
 	-DBUILD_SHARED_LIBS=ON \
 	-DINSTALL_LIB_DIR=%{_lib} \
 	-DINSTALL_LIBDATA_DIR=%{_libdir} \
-	-DBUILD_PYTHON=%{_bindir}/python%{py_ver} \
-	%{?debug:-DCMAKE_BUILD_TYPE="Debug"}
+	-DBUILD_PYTHON=%{_bindir}/python%{py_ver}
 %{__make}
 
 %install
