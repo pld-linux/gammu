@@ -1,35 +1,35 @@
-diff -burNp gammu-1.23.1/libgammu/gsmstate.c gammu-1.23.1-dud/libgammu/gsmstate.c
---- gammu-1.23.1/libgammu/gsmstate.c	2009-02-12 15:05:40.000000000 +0100
-+++ gammu-1.23.1-dud/libgammu/gsmstate.c	2009-03-14 21:19:03.565653553 +0100
-@@ -1021,6 +1021,7 @@ GSM_Error GSM_FindGammuRC (INI_Section *
+--- gammu-1.28.92/libgammu/gsmstate.c~	2010-10-04 15:28:55.000000000 +0200
++++ gammu-1.28.92/libgammu/gsmstate.c	2010-10-05 11:15:22.047837669 +0200
+@@ -1085,6 +1085,7 @@
  {
  	char configfile[PATH_MAX + 1];
  	char *envpath;
 +	char *home_etc;
  	GSM_Error error;
+ #if defined(HAVE_GETPWUID) && defined(HAVE_GETUID)
+ 	struct passwd *pwent;
+@@ -1126,6 +1127,16 @@
+ 		}
+ 	}
  
- 	*result = NULL;
-@@ -1042,6 +1043,15 @@ GSM_Error GSM_FindGammuRC (INI_Section *
- 	/* Reset as we're using strcat */
- 	configfile[0] = 0;
- 
-+        /* Try user etc dir */
-+        home_etc = getenv("HOME_ETC");
-+        if (home_etc) {
-+                strcat(configfile, home_etc);
-+                strcat(configfile, GAMMURC_NAME);
++	/* Try user etc dir */
++	home_etc = getenv("HOME_ETC");
++	if (home_etc) {
++		strcat(configfile, home_etc);
++		strcat(configfile, GAMMURC_NAME);
 +
-+                error = GSM_TryReadGammuRC(configfile, result);
-+                if (error == ERR_NONE) return ERR_NONE;
-+        } else {
- 	/* Try user home */
++		error = GSM_TryReadGammuRC(configfile, result);
++		if (error == ERR_NONE) return ERR_NONE;
++	} else {
++
+ 	/* Try home from environment */
  	envpath  = getenv("HOME");
  	if (envpath) {
-@@ -1051,6 +1061,7 @@ GSM_Error GSM_FindGammuRC (INI_Section *
+@@ -1135,6 +1146,7 @@
  		error = GSM_TryReadGammuRC(configfile, result);
  		if (error == ERR_NONE) return ERR_NONE;
  	}
 +	}
  
- #if defined(WIN32)
- 	/* Reset as we're using strcat */
+ #if defined(HAVE_GETPWUID) && defined(HAVE_GETUID)
+ 	/* Tru home from passwd */
