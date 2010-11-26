@@ -2,7 +2,7 @@ Summary:	Tool suite for mobile phones
 Summary(pl.UTF-8):	Zestaw narzędzi do telefonów komórkowych
 Name:		gammu
 Version:	1.28.0
-Release:	3
+Release:	4
 Epoch:		1
 License:	GPL v2+
 Group:		Applications/Communications
