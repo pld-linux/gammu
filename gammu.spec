@@ -1,13 +1,13 @@
 Summary:	Tool suite for mobile phones
 Summary(pl.UTF-8):	Zestaw narzędzi do telefonów komórkowych
 Name:		gammu
-Version:	1.28.92
+Version:	1.28.93
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.bz2
-# Source0-md5:	43abbb2fce727c18eb858ff8197c6799
+# Source0-md5:	f91bd3c95f17b7f21229a5003ca94303
 Source1:	%{name}-smsd.init
 Source2:	%{name}-smsd.sysconfig
 Patch0:		%{name}-etc_dir.patch
@@ -59,11 +59,11 @@ messages enqueued in this storage. It is perfect tool for managing big
 amounts of received or sent messages and automatically process them.
 
 %description smsd -l pl.UTF-8
-Demon SMS Gammu jest programem, któr okresowo sprawdza czy modem GSM
+Demon SMS Gammu jest programem, który okresowo sprawdza czy modem GSM
 odebrał jakieś wiadomości, przechowuje je w zdefiniowanym zasobie a
 także wysyła wiadomości skolejkowane w tym zasobie. Jest idealnym
 narzędziem do zarządzania dużą ilością otrzymanych lub wysyłanych
-wiadomości i atomatycznego przetwarzania ich.
+wiadomości i automatycznego przetwarzania ich.
 
 %package libs
 Summary:	Gammu library
@@ -135,7 +135,6 @@ Pakiet ten dostarcza bashowe uzupełnianie nazw dla gammu.
 mkdir -p build
 cd build
 %cmake .. \
-	-DCMAKE_VERBOSE_MAKEFILE=ON \
 	-DBUILD_SHARED_LIBS=OFF \
 	-DINSTALL_LIB_DIR=%{_lib} \
 	-DINSTALL_LIBDATA_DIR=%{_libdir} \
@@ -144,7 +143,6 @@ cd build
 mv libgammu/libGammu.a ..
 mv smsd/libgsmsd.a ..
 %cmake .. \
-	-DCMAKE_VERBOSE_MAKEFILE=ON \
 	-DBUILD_SHARED_LIBS=ON \
 	-DINSTALL_LIB_DIR=%{_lib} \
 	-DINSTALL_LIBDATA_DIR=%{_libdir} \
