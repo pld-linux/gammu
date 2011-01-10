@@ -1,13 +1,13 @@
 Summary:	Tool suite for mobile phones
 Summary(pl.UTF-8):	Zestaw narzędzi do telefonów komórkowych
 Name:		gammu
-Version:	1.28.94
+Version:	1.28.95
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.bz2
-# Source0-md5:	67945cf672f672396730cc02afb61691
+# Source0-md5:	a40b51ca550de51a395ceaffd80b0db1
 Source1:	%{name}-smsd.init
 Source2:	%{name}-smsd.sysconfig
 Patch0:		%{name}-etc_dir.patch
@@ -210,7 +210,6 @@ fi
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/gammurc
 %{_examplesdir}/%{name}-%{version}
 %{_mandir}/man[157]/*
-%lang(cs) %{_mandir}/cs/man[157]/*
 
 %files smsd
 %defattr(644,root,root,755)
