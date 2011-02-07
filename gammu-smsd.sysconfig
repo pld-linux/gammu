@@ -1,4 +1,0 @@
-# List of gammu-smsd configuration files. Every gammu-smsd instance
-# should have its own modem/phone and thus its own config file.
-# 
-#SMSD_INSTANCES="ttyS1"
