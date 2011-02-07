@@ -1,13 +1,13 @@
 Summary:	Tool suite for mobile phones
 Summary(pl.UTF-8):	Zestaw narzędzi do telefonów komórkowych
 Name:		gammu
-Version:	1.28.0
-Release:	4
+Version:	1.29.0
+Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		Applications/Communications
-Source0:	http://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.bz2
-# Source0-md5:	1cddf45348b0c8cebcc14c9e693c6c9a
+Source0:	http://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.xz
+# Source0-md5:	27b3a811cd27c94c66d9b964140a51f6
 Source1:	%{name}-smsd.init
 Source2:	%{name}-smsd.sysconfig
 Patch0:		%{name}-etc_dir.patch
@@ -20,7 +20,9 @@ BuildRequires:	mysql-devel
 BuildRequires:	postgresql-devel
 BuildRequires:	python-devel >= 1:2.5
 BuildRequires:	rpm-pythonprov
-BuildRequires:	rpmbuild(macros) >= 1.293
+BuildRequires:	rpmbuild(macros) >= 1.600
+BuildRequires:	tar >= 1:1.22
+BuildRequires:	xz >= 1:4.999.7
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Suggests:	%{name}-smsd = %{epoch}:%{version}-%{release}
 Provides:	mygnokii2
@@ -59,11 +61,11 @@ messages enqueued in this storage. It is perfect tool for managing big
 amounts of received or sent messages and automatically process them.
 
 %description smsd -l pl.UTF-8
-Demon SMS Gammu jest programem, któr okresowo sprawdza czy modem GSM
+Demon SMS Gammu jest programem, który okresowo sprawdza czy modem GSM
 odebrał jakieś wiadomości, przechowuje je w zdefiniowanym zasobie a
 także wysyła wiadomości skolejkowane w tym zasobie. Jest idealnym
 narzędziem do zarządzania dużą ilością otrzymanych lub wysyłanych
-wiadomości i atomatycznego przetwarzania ich.
+wiadomości i automatycznego przetwarzania ich.
 
 %package libs
 Summary:	Gammu library
@@ -135,24 +137,18 @@ Pakiet ten dostarcza bashowe uzupełnianie nazw dla gammu.
 mkdir -p build
 cd build
 %cmake .. \
-	-DCMAKE_INSTALL_PREFIX="%{_prefix}" \
-	-DCMAKE_VERBOSE_MAKEFILE=ON \
 	-DBUILD_SHARED_LIBS=OFF \
 	-DINSTALL_LIB_DIR=%{_lib} \
 	-DINSTALL_LIBDATA_DIR=%{_libdir} \
-	-DBUILD_PYTHON=%{_bindir}/python%{py_ver} \
-	%{?debug:-DCMAKE_BUILD_TYPE="Debug"}
+	-DBUILD_PYTHON=%{_bindir}/python%{py_ver}
 %{__make}
 mv libgammu/libGammu.a ..
 mv smsd/libgsmsd.a ..
 %cmake .. \
-	-DCMAKE_INSTALL_PREFIX="%{_prefix}" \
-	-DCMAKE_VERBOSE_MAKEFILE=ON \
 	-DBUILD_SHARED_LIBS=ON \
 	-DINSTALL_LIB_DIR=%{_lib} \
 	-DINSTALL_LIBDATA_DIR=%{_libdir} \
-	-DBUILD_PYTHON=%{_bindir}/python%{py_ver} \
-	%{?debug:-DCMAKE_BUILD_TYPE="Debug"}
+	-DBUILD_PYTHON=%{_bindir}/python%{py_ver}
 %{__make}
 
 %install
@@ -163,7 +159,7 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_examplesdir}/%{name}-%{version}}
 	DESTDIR=$RPM_BUILD_ROOT
 
 install docs/config/gammurc $RPM_BUILD_ROOT%{_sysconfdir}
-cp -r docs/develop $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+#cp -r docs/develop $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 install libGammu.a $RPM_BUILD_ROOT%{_libdir}
 install libgsmsd.a $RPM_BUILD_ROOT%{_libdir}
 install -d $RPM_BUILD_ROOT%{_sysconfdir}/%{name}-smsd $RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig}
@@ -176,7 +172,7 @@ install -d $RPM_BUILD_ROOT/%{_sharedstatedir}/%{name}-smsd
 %find_lang %{name}
 %find_lang libgammu
 
-rm -rf $RPM_BUILD_ROOT%{_docdir}/%{name}
+%{__rm} -r $RPM_BUILD_ROOT%{_docdir}/%{name}
 
 # for rpm autodeps
 chmod 755 $RPM_BUILD_ROOT%{_libdir}/lib*.so*
@@ -209,14 +205,12 @@ fi
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc AUTHORS BUGS ChangeLog docs/user/gammu.html docs/user/gammu.html README README.Python
-%doc %lang(it) docs/user/gammu.it.txt docs/user/readme.it.txt
+%doc AUTHORS BUGS ChangeLog README README.Python docs/manual/Gammu.htm
 %attr(755,root,root) %{_bindir}/%{name}
 %attr(755,root,root) %{_bindir}/jadmaker
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/gammurc
 %{_examplesdir}/%{name}-%{version}
 %{_mandir}/man[157]/*
-%lang(cs) %{_mandir}/cs/man[157]/*
 
 %files smsd
 %defattr(644,root,root,755)
