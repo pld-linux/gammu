@@ -1,16 +1,17 @@
 Summary:	Tool suite for mobile phones
 Summary(pl.UTF-8):	Zestaw narzędzi do telefonów komórkowych
 Name:		gammu
-Version:	1.29.0
+Version:	1.29.90
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.xz
-# Source0-md5:	27b3a811cd27c94c66d9b964140a51f6
+# Source0-md5:	117420cc7b17df6a6bfd0ab6170c5dfa
 Source1:	%{name}-smsd.init
 Source2:	%{name}-smsd.sysconfig
 Patch0:		%{name}-etc_dir.patch
+Patch1:		%{name}-werror.patch
 URL:		http://www.gammu.org/
 BuildRequires:	bluez-libs-devel
 BuildRequires:	cmake >= 2.4.6
@@ -132,6 +133,7 @@ Pakiet ten dostarcza bashowe uzupełnianie nazw dla gammu.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 mkdir -p build
