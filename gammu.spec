@@ -1,13 +1,13 @@
 Summary:	Tool suite for mobile phones
 Summary(pl.UTF-8):	Zestaw narzędzi do telefonów komórkowych
 Name:		gammu
-Version:	1.29.91
+Version:	1.29.92
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.xz
-# Source0-md5:	2e61167a2753723c2bbfd2d28547fe59
+# Source0-md5:	4a560c7ae41712ae750132936a89dc31
 Source1:	%{name}-smsd.init
 Source2:	%{name}-smsd.sysconfig
 Patch0:		%{name}-etc_dir.patch
@@ -207,7 +207,7 @@ fi
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc AUTHORS BUGS ChangeLog README README.Python docs/manual/Gammu.htm
+%doc AUTHORS ChangeLog README README.Python docs/manual/Gammu.htm
 %attr(755,root,root) %{_bindir}/%{name}
 %attr(755,root,root) %{_bindir}/%{name}-detect
 %attr(755,root,root) %{_bindir}/jadmaker
