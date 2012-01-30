@@ -1,0 +1,1 @@
+d /var/run/gammu-smsd 0750 root gammu-smsd -
