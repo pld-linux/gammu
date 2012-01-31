@@ -10,6 +10,7 @@ Source0:	http://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.xz
 # Source0-md5:	6983485c0ad0873f028da6c6e2039fa7
 Source1:	%{name}-smsd.init
 Source2:	%{name}-smsd.sysconfig
+Source3:	%{name}.tmpfiles
 Patch0:		%{name}-etc_dir.patch
 Patch1:		%{name}-werror.patch
 URL:		http://www.gammu.org/
@@ -155,7 +156,8 @@ mv smsd/libgsmsd.a ..
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_examplesdir}/%{name}-%{version}}
+install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_examplesdir}/%{name}-%{version}} \
+	$RPM_BUILD_ROOT/usr/lib/tmpfiles.d
 
 %{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
@@ -170,6 +172,8 @@ install -p %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}-smsd
 cp -a %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/%{name}-smsd
 install -d $RPM_BUILD_ROOT/%{_varrun}/%{name}-smsd
 install -d $RPM_BUILD_ROOT/%{_sharedstatedir}/%{name}-smsd
+
+install %{SOURCE2} $RPM_BUILD_ROOT/usr/lib/tmpfiles.d/%{name}.conf
 
 %find_lang %{name}
 %find_lang libgammu
@@ -224,6 +228,7 @@ fi
 %attr(754,root,root) /etc/rc.d/init.d/%{name}-smsd
 %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/%{name}-smsd
 %{_sysconfdir}/%{name}-smsd
+/usr/lib/tmpfiles.d/%{name}.conf
 %attr(750,root,gammu-smsd) %{_varrun}/%{name}-smsd
 %attr(750,gammu-smsd,gammu-smsd) %{_sharedstatedir}/%{name}-smsd
 
