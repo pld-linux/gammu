@@ -173,7 +173,7 @@ cp -a %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/%{name}-smsd
 install -d $RPM_BUILD_ROOT/%{_varrun}/%{name}-smsd
 install -d $RPM_BUILD_ROOT/%{_sharedstatedir}/%{name}-smsd
 
-install %{SOURCE2} $RPM_BUILD_ROOT/usr/lib/tmpfiles.d/%{name}.conf
+install %{SOURCE3} $RPM_BUILD_ROOT/usr/lib/tmpfiles.d/%{name}.conf
 
 %find_lang %{name}
 %find_lang libgammu
