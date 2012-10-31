@@ -1,13 +1,13 @@
 Summary:	Tool suite for mobile phones
 Summary(pl.UTF-8):	Zestaw narzędzi do telefonów komórkowych
 Name:		gammu
-Version:	1.31.0
-Release:	3
+Version:	1.32.0
+Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.xz
-# Source0-md5:	6983485c0ad0873f028da6c6e2039fa7
+# Source0-md5:	a9de0904ab08093a1514d876c7bec13a
 Source1:	%{name}-smsd.init
 Source2:	%{name}-smsd.sysconfig
 Source3:	%{name}.tmpfiles
@@ -217,6 +217,7 @@ fi
 %attr(755,root,root) %{_bindir}/jadmaker
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/gammurc
 %{_examplesdir}/%{name}-%{version}
+%{_datadir}/gammu
 %{_mandir}/man[157]/*
 
 %files smsd
@@ -236,8 +237,8 @@ fi
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libGammu.so.*.*
 %attr(755,root,root) %{_libdir}/libgsmsd.so.*.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgsmsd.so.?
-%attr(755,root,root) %ghost %{_libdir}/libGammu.so.?
+%attr(755,root,root) %ghost %{_libdir}/libgsmsd.so.7
+%attr(755,root,root) %ghost %{_libdir}/libGammu.so.7
 
 %files devel
 %defattr(644,root,root,755)
@@ -245,8 +246,6 @@ fi
 %attr(755,root,root) %{_libdir}/libGammu.so
 %attr(755,root,root) %{_libdir}/libgsmsd.so
 %{_includedir}/*
-%dir %{py_sitedir}/gammu/
-%attr(755,root,root) %{py_sitedir}/gammu/_gammu.so
 %{_pkgconfigdir}/gammu.pc
 %{_pkgconfigdir}/gammu-smsd.pc
 
