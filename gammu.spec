@@ -17,7 +17,7 @@ URL:		http://www.gammu.org/
 BuildRequires:	bluez-libs-devel
 BuildRequires:	cmake >= 2.4.6
 BuildRequires:	curl-devel
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-tools
 BuildRequires:	mysql-devel
 BuildRequires:	postgresql-devel
 BuildRequires:	python-devel >= 1:2.5
