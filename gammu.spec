@@ -1,13 +1,14 @@
+# TODO: gammu-smsd-inject should be in seperate package
 Summary:	Tool suite for mobile phones
 Summary(pl.UTF-8):	Zestaw narzędzi do telefonów komórkowych
 Name:		gammu
-Version:	1.32.0
-Release:	2
+Version:	1.36.2
+Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.xz
-# Source0-md5:	a9de0904ab08093a1514d876c7bec13a
+# Source0-md5:	60702f67a756b058706995824f40016a
 Source1:	%{name}-smsd.init
 Source2:	%{name}-smsd.sysconfig
 Source3:	%{name}.tmpfiles
@@ -20,8 +21,6 @@ BuildRequires:	curl-devel
 BuildRequires:	gettext-tools
 BuildRequires:	mysql-devel
 BuildRequires:	postgresql-devel
-BuildRequires:	python-devel >= 1:2.5
-BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.600
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz >= 1:4.999.7
@@ -93,19 +92,6 @@ Header files for Gammu tool suite for mobile phones.
 %description devel -l pl.UTF-8
 Pliki nagłówkowe zestawu narzędzi dla telefonów komórkowych Gammu.
 
-%package -n python-gammu
-Summary:	Python bingings for Gammu library
-Summary(pl.UTF-8):	Wiązania języka Python dla biblioteki Gammu
-Group:		Development/Languages/Python
-Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
-%pyrequires_eq	python-modules
-
-%description -n python-gammu
-Python bingings for Gammu library.
-
-%description -n python-gammu -l pl.UTF-8
-Wiązania języka Python dla biblioteki Gammu.
-
 %package static
 Summary:	Gammu static library
 Summary(pl.UTF-8):	Biblioteka statyczna Gammu
@@ -145,16 +131,14 @@ cd build
 %cmake .. \
 	-DBUILD_SHARED_LIBS=OFF \
 	-DINSTALL_LIB_DIR=%{_lib} \
-	-DINSTALL_LIBDATA_DIR=%{_libdir} \
-	-DBUILD_PYTHON=%{_bindir}/python%{py_ver}
+	-DINSTALL_LIBDATA_DIR=%{_libdir}
 %{__make}
 mv libgammu/libGammu.a ..
 mv smsd/libgsmsd.a ..
 %cmake .. \
 	-DBUILD_SHARED_LIBS=ON \
 	-DINSTALL_LIB_DIR=%{_lib} \
-	-DINSTALL_LIBDATA_DIR=%{_libdir} \
-	-DBUILD_PYTHON=%{_bindir}/python%{py_ver}
+	-DINSTALL_LIBDATA_DIR=%{_libdir}
 %{__make}
 
 %install
@@ -214,7 +198,7 @@ fi
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog README README.Python docs/manual/Gammu.htm
+%doc AUTHORS ChangeLog docs/manual/Gammu.htm
 %attr(755,root,root) %{_bindir}/%{name}
 %attr(755,root,root) %{_bindir}/%{name}-detect
 %attr(755,root,root) %{_bindir}/jadmaker
@@ -251,12 +235,6 @@ fi
 %{_includedir}/*
 %{_pkgconfigdir}/gammu.pc
 %{_pkgconfigdir}/gammu-smsd.pc
-
-%files -n python-gammu
-%defattr(644,root,root,755)
-%dir %{py_sitedir}/gammu
-%attr(755,root,root) %{py_sitedir}/gammu/*.so
-%{py_sitedir}/gammu/*.py
 
 %files static
 %defattr(644,root,root,755)
