@@ -2,18 +2,17 @@
 Summary:	Tool suite for mobile phones
 Summary(pl.UTF-8):	Zestaw narzędzi do telefonów komórkowych
 Name:		gammu
-Version:	1.36.2
-Release:	2
+Version:	1.36.8
+Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	http://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.xz
-# Source0-md5:	60702f67a756b058706995824f40016a
+# Source0-md5:	462d45f9fb359bd7931c288785028e2d
 Source1:	%{name}-smsd.init
 Source2:	%{name}-smsd.sysconfig
 Source3:	%{name}.tmpfiles
 Patch0:		%{name}-etc_dir.patch
-Patch1:		%{name}-werror.patch
 URL:		http://www.gammu.org/
 BuildRequires:	bluez-libs-devel
 BuildRequires:	cmake >= 2.4.6
@@ -123,9 +122,10 @@ Pakiet ten dostarcza bashowe uzupełnianie nazw dla gammu.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 %build
+export CFLAGS="%{optflags}"                                                                                                                                                                                        
+export CXXFLAGS="%{optflags}"                                                                                                                                                                                      
 mkdir -p build
 cd build
 %cmake .. \
@@ -243,4 +243,4 @@ fi
 
 %files -n bash-completion-gammu
 %defattr(644,root,root,755)
-%{_sysconfdir}/bash_completion.d/gammu
+%{bash_compdir}/gammu
