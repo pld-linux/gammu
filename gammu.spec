@@ -3,7 +3,7 @@ Summary:	Tool suite for mobile phones
 Summary(pl.UTF-8):	Zestaw narzędzi do telefonów komórkowych
 Name:		gammu
 Version:	1.37.0
-Release:	1
+Release:	2
 Epoch:		1
 License:	GPL v2+
 Group:		Applications/Communications
@@ -14,6 +14,7 @@ Source2:	%{name}-smsd.sysconfig
 Source3:	%{name}.tmpfiles
 Patch0:		%{name}-etc_dir.patch
 URL:		http://www.gammu.org/
+BuildRequires:	bash-completion
 BuildRequires:	bluez-libs-devel
 BuildRequires:	cmake >= 2.4.6
 BuildRequires:	curl-devel
