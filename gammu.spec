@@ -117,8 +117,8 @@ Summary:	bash-completion for gammu
 Summary(pl.UTF-8):	bashowe uzupełnianie nazw dla gammu
 Group:		Applications/Shells
 Requires:	%{name} = %{epoch}:%{version}-%{release}
-Requires:	bash-completion
-%if "%{_rpmversion}" >= "5"
+Requires:	bash-completion >= 2.0
+%if "%{_rpmversion}" >= "4.6"
 BuildArch:	noarch
 %endif
 
@@ -179,8 +179,8 @@ cp -p %{SOURCE3} $RPM_BUILD_ROOT/usr/lib/tmpfiles.d/%{name}.conf
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post   libs -p /sbin/ldconfig
-%postun libs -p /sbin/ldconfig
+%post	libs -p /sbin/ldconfig
+%postun	libs -p /sbin/ldconfig
 
 %pre smsd
 %groupadd -g 251 gammu-smsd
@@ -192,14 +192,14 @@ rm -rf $RPM_BUILD_ROOT
 
 %preun smsd
 if [ "$1" = "0" ]; then
-        %service gammu-smsd stop
-        /sbin/chkconfig --del gammu-smsd
+	%service gammu-smsd stop
+	/sbin/chkconfig --del gammu-smsd
 fi
 
 %postun smsd
 if [ "$1" = "0" ]; then
-        %groupremove gammu-smsd
-        %userremove gammu-smsd
+	%groupremove gammu-smsd
+	%userremove gammu-smsd
 fi
 
 %files -f %{name}.lang
