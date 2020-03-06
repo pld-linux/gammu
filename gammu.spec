@@ -2,27 +2,35 @@
 Summary:	Tool suite for mobile phones
 Summary(pl.UTF-8):	Zestaw narzędzi do telefonów komórkowych
 Name:		gammu
-Version:	1.37.3
-Release:	2
+Version:	1.41.0
+Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		Applications/Communications
-Source0:	http://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.xz
-# Source0-md5:	bdb20d5e52f750dbe9aaf1cc8eed0822
+Source0:	https://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.xz
+# Source0-md5:	35b31f06ddbd4dbfd0d1387fd2822c32
 Source1:	%{name}-smsd.init
 Source2:	%{name}-smsd.sysconfig
 Source3:	%{name}.tmpfiles
 Patch0:		%{name}-etc_dir.patch
-URL:		http://www.gammu.org/
-BuildRequires:	bash-completion
+URL:		https://gammu.eu/
 BuildRequires:	bluez-libs-devel
-BuildRequires:	cmake >= 2.4.6
+BuildRequires:	cmake >= 3.0
 BuildRequires:	curl-devel
+BuildRequires:	gcc >= 6:4.7
 BuildRequires:	gettext-tools
+BuildRequires:	glib2-devel >= 2
+BuildRequires:	libdbi-devel
+BuildRequires:	libusb-devel >= 1.0
 BuildRequires:	mysql-devel
+BuildRequires:	pkgconfig
 BuildRequires:	postgresql-devel
-BuildRequires:	rpmbuild(macros) >= 1.600
+BuildRequires:	rpmbuild(macros) >= 1.605
+BuildRequires:	sqlite3 >= 3
+BuildRequires:	systemd-units
 BuildRequires:	tar >= 1:1.22
+BuildRequires:	udev-glib-devel
+BuildRequires:	unixODBC-devel
 BuildRequires:	xz >= 1:4.999.7
 Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 Suggests:	%{name}-smsd = %{epoch}:%{version}-%{release}
@@ -125,18 +133,19 @@ Pakiet ten dostarcza bashowe uzupełnianie nazw dla gammu.
 %patch0 -p1
 
 %build
-export CFLAGS="%{optflags}"                                                                                                                                                                                        
-export CXXFLAGS="%{optflags}"                                                                                                                                                                                      
-mkdir -p build
-cd build
+install -d build-static
+cd build-static
 %cmake .. \
 	-DBUILD_SHARED_LIBS=OFF \
 	-DINSTALL_LIB_DIR=%{_lib} \
 	-DINSTALL_LIBDATA_DIR=%{_libdir}
 %{__make}
-mv libgammu/libGammu.a ..
-mv smsd/libgsmsd.a ..
+cd ..
+
+install -d build
+cd build
 %cmake .. \
+	-DBASH_COMPLETION_COMPLETIONSDIR=%{bash_compdir} \
 	-DBUILD_SHARED_LIBS=ON \
 	-DINSTALL_LIB_DIR=%{_lib} \
 	-DINSTALL_LIBDATA_DIR=%{_libdir}
@@ -144,32 +153,28 @@ mv smsd/libgsmsd.a ..
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_examplesdir}/%{name}-%{version}} \
-	$RPM_BUILD_ROOT/usr/lib/tmpfiles.d
+install -d $RPM_BUILD_ROOT{%{_sysconfdir}/gammu-smsd,/etc/{rc.d/init.d,sysconfig}} \
+	$RPM_BUILD_ROOT{%{systemdtmpfilesdir},/var/{run,lib}/gammu-smsd} \
+	$RPM_BUILD_ROOT%{_examplesdir}
 
 %{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-install docs/config/gammurc $RPM_BUILD_ROOT%{_sysconfdir}
-#cp -r docs/develop $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
-install libGammu.a $RPM_BUILD_ROOT%{_libdir}
-install libgsmsd.a $RPM_BUILD_ROOT%{_libdir}
-install -d $RPM_BUILD_ROOT%{_sysconfdir}/%{name}-smsd $RPM_BUILD_ROOT/etc/{rc.d/init.d,sysconfig}
-install docs/config/smsdrc $RPM_BUILD_ROOT%{_sysconfdir}/%{name}-smsd/ttyS0.conf
-install -p %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/%{name}-smsd
-cp -a %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/%{name}-smsd
-install -d $RPM_BUILD_ROOT/%{_varrun}/%{name}-smsd
-install -d $RPM_BUILD_ROOT/%{_sharedstatedir}/%{name}-smsd
+cp -p build-static/libgammu/libGammu.a $RPM_BUILD_ROOT%{_libdir}
+cp -p build-static/smsd/libgsmsd.a $RPM_BUILD_ROOT%{_libdir}
 
-install %{SOURCE3} $RPM_BUILD_ROOT/usr/lib/tmpfiles.d/%{name}.conf
+cp -p docs/config/gammurc $RPM_BUILD_ROOT%{_sysconfdir}
+cp -p docs/config/smsdrc $RPM_BUILD_ROOT%{_sysconfdir}/gammu-smsd/ttyS0.conf
+cp -pr docs/examples $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+cp -p %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/gammu-smsd
+cp -a %{SOURCE2} $RPM_BUILD_ROOT/etc/sysconfig/gammu-smsd
+cp -p %{SOURCE3} $RPM_BUILD_ROOT/usr/lib/tmpfiles.d/%{name}.conf
 
+%{__mv} $RPM_BUILD_ROOT%{_localedir}/{nb_NO,nb}
 %find_lang %{name}
 %find_lang libgammu
 
 %{__rm} -r $RPM_BUILD_ROOT%{_docdir}/%{name}
-
-# for rpm autodeps
-chmod 755 $RPM_BUILD_ROOT%{_libdir}/lib*.so*
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -199,14 +204,18 @@ fi
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog docs/manual/Gammu.htm
-%attr(755,root,root) %{_bindir}/%{name}
-%attr(755,root,root) %{_bindir}/%{name}-detect
+%doc ChangeLog README.en_GB docs/manual/Gammu.htm
+%attr(755,root,root) %{_bindir}/gammu
+%attr(755,root,root) %{_bindir}/gammu-detect
 %attr(755,root,root) %{_bindir}/jadmaker
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/gammurc
-%{_examplesdir}/%{name}-%{version}
 %{_datadir}/gammu
-%{_mandir}/man[157]/*
+%{_mandir}/man1/gammu.1*
+%{_mandir}/man1/gammu-detect.1*
+%{_mandir}/man1/jadmaker.1*
+%{_mandir}/man5/gammu-backup.5*
+%{_mandir}/man5/gammu-smsbackup.5*
+%{_mandir}/man5/gammurc.5*
 
 %files smsd
 %defattr(644,root,root,755)
@@ -214,33 +223,42 @@ fi
 %attr(755,root,root) %{_bindir}/gammu-smsd
 %attr(755,root,root) %{_bindir}/gammu-smsd-inject
 %attr(755,root,root) %{_bindir}/gammu-smsd-monitor
-%attr(754,root,root) /etc/rc.d/init.d/%{name}-smsd
-%config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/%{name}-smsd
-%{_sysconfdir}/%{name}-smsd
-/usr/lib/tmpfiles.d/%{name}.conf
-%attr(750,root,gammu-smsd) %{_varrun}/%{name}-smsd
-%attr(750,gammu-smsd,gammu-smsd) %{_sharedstatedir}/%{name}-smsd
+%attr(754,root,root) /etc/rc.d/init.d/gammu-smsd
+%config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/gammu-smsd
+%dir %{_sysconfdir}/gammu-smsd
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/gammu-smsd/ttyS0.conf
+%{systemdunitdir}/gammu-smsd.service
+%{systemdtmpfilesdir}/gammu.conf
+%attr(750,root,gammu-smsd) /var/run/gammu-smsd
+%attr(750,gammu-smsd,gammu-smsd) /var/lib/gammu-smsd
+%{_mandir}/man1/gammu-smsd.1*
+%{_mandir}/man1/gammu-smsd-inject.1*
+%{_mandir}/man1/gammu-smsd-monitor.1*
+%{_mandir}/man5/gammu-smsdrc.5*
+%{_mandir}/man7/gammu-smsd-*.7*
 
 %files libs -f libgammu.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libGammu.so.*.*
+%attr(755,root,root) %ghost %{_libdir}/libGammu.so.8
 %attr(755,root,root) %{_libdir}/libgsmsd.so.*.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgsmsd.so.7
-%attr(755,root,root) %ghost %{_libdir}/libGammu.so.7
+%attr(755,root,root) %ghost %{_libdir}/libgsmsd.so.8
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/%{name}-config
+%attr(755,root,root) %{_bindir}/gammu-config
 %attr(755,root,root) %{_libdir}/libGammu.so
 %attr(755,root,root) %{_libdir}/libgsmsd.so
-%{_includedir}/*
+%{_includedir}/gammu
 %{_pkgconfigdir}/gammu.pc
 %{_pkgconfigdir}/gammu-smsd.pc
+%{_mandir}/man1/gammu-config.1*
+%{_examplesdir}/%{name}-%{version}
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/libgsmsd.a
 %{_libdir}/libGammu.a
+%{_libdir}/libgsmsd.a
 
 %files -n bash-completion-gammu
 %defattr(644,root,root,755)
