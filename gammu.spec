@@ -118,9 +118,7 @@ Summary(pl.UTF-8):	bashowe uzupełnianie nazw dla gammu
 Group:		Applications/Shells
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Requires:	bash-completion >= 2.0
-%if "%{_rpmversion}" >= "4.6"
 BuildArch:	noarch
-%endif
 
 %description -n bash-completion-gammu
 This package provides bash-completion for gammu.
