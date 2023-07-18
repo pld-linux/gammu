@@ -2,13 +2,13 @@
 Summary:	Tool suite for mobile phones
 Summary(pl.UTF-8):	Zestaw narzędzi do telefonów komórkowych
 Name:		gammu
-Version:	1.41.0
+Version:	1.42.0
 Release:	1
 Epoch:		1
 License:	GPL v2+
 Group:		Applications/Communications
 Source0:	https://dl.cihar.com/gammu/releases/%{name}-%{version}.tar.xz
-# Source0-md5:	35b31f06ddbd4dbfd0d1387fd2822c32
+# Source0-md5:	552e547864f2367115c165f84f341ee6
 Source1:	%{name}-smsd.init
 Source2:	%{name}-smsd.sysconfig
 Source3:	%{name}.tmpfiles
